@@ -8,7 +8,13 @@ Site oficial da Lyken Agency, uma agencia e consultoria criativa e estrategica q
 
 Fase 00 - Project Foundation
 
-Subfase 00.1 - consolidacao inicial do nome oficial, stack e documentacao minima.
+Subfases 00.1 a 00.5 validadas:
+
+- nome oficial consolidado
+- base Vite + React + JavaScript criada
+- Tailwind CSS configurado tecnicamente
+- estrutura inicial de pastas organizada
+- fundacao tecnica validada para a Fase 01
 
 Nenhuma secao visual final, sistema bilingue, navegacao definitiva, animacao final, formulario funcional ou implementacao de deploy foi iniciada nesta etapa.
 
@@ -38,11 +44,28 @@ Referencia de fase em docs:
 
 ## Comandos previstos
 
-Quando a base tecnica em React com Vite for criada nas proximas subfases, os comandos previstos serao:
+Comandos disponiveis nesta base:
 
-- npm install
 - npm run dev
 - npm run build
+- npm run preview
+
+## Estrutura inicial
+
+Pastas principais preparadas nesta fase:
+
+- public/favicon
+- public/images
+- public/logos
+- src/assets
+- src/components
+- src/content
+- src/data
+- src/hooks
+- src/lib
+- src/sections
+- src/styles
+- src/utils
 
 ## Direcao do projeto
 
