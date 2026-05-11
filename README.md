@@ -1,24 +1,8 @@
 # Lyken Agency Website
 
-Nome oficial do projeto: lyken-agency-website
+Premium interactive bilingual website for Lyken Agency, built to support a strategic, technological, and high-end digital brand experience.
 
-Site oficial da Lyken Agency, uma agencia e consultoria criativa e estrategica que une branding, marketing digital, websites, aplicativos, e-commerce e solucoes com inteligencia artificial.
-
-## Status atual
-
-Fase 00 - Project Foundation
-
-Subfases 00.1 a 00.5 validadas:
-
-- nome oficial consolidado
-- base Vite + React + JavaScript criada
-- Tailwind CSS configurado tecnicamente
-- estrutura inicial de pastas organizada
-- fundacao tecnica validada para a Fase 01
-
-Nenhuma secao visual final, sistema bilingue, navegacao definitiva, animacao final, formulario funcional ou implementacao de deploy foi iniciada nesta etapa.
-
-## Stack oficial
+## Stack
 
 - React
 - Vite
@@ -28,55 +12,24 @@ Nenhuma secao visual final, sistema bilingue, navegacao definitiva, animacao fin
 - JavaScript
 - Vercel
 
-## Documentacao atual
+## Install
 
-Os documentos principais da fundacao agora existem na raiz do projeto e a documentacao expandida permanece organizada na pasta docs.
+```bash
+npm install
+```
 
-Arquivos principais na raiz:
+## Run
 
-- LYKEN_WEBSITE_BRIEF.md
-- ENGINEERING_DOCUMENTATION.md
-- README.md
+```bash
+npm run dev
+```
 
-Referencia de fase em docs:
+## Build
 
-- docs/00-project-foundation.md
+```bash
+npm run build
+```
 
-## Comandos previstos
+## Deploy
 
-Comandos disponiveis nesta base:
-
-- npm run dev
-- npm run build
-- npm run preview
-
-## Estrutura inicial
-
-Pastas principais preparadas nesta fase:
-
-- public/favicon
-- public/images
-- public/logos
-- src/assets
-- src/components
-- src/content
-- src/data
-- src/hooks
-- src/lib
-- src/sections
-- src/styles
-- src/utils
-
-## Direcao do projeto
-
-Conceito central: From Idea to Living Brand
-
-Versao em portugues: Da Ideia a Marca Viva
-
-Narrativa principal: Idea -> Structure -> Identity -> Digital Presence -> Intelligence -> Growth
-
-## Observacoes
-
-- Esta subfase prepara a fundacao do projeto antes de qualquer desenvolvimento visual ou funcional.
-- A experiencia final devera ser premium, tecnologica, sofisticada, estrategica, bilingue e responsiva nas fases apropriadas.
-- Acessibilidade, performance, SEO, motion system e estrutura visual completa serao tratados nas subfases corretas, sem antecipacao indevida aqui.
+Deploy the project on Vercel after the open launch decisions are approved. The final domain, official email, WhatsApp, and social links are still pending in [docs/OPEN_DECISIONS.md](docs/OPEN_DECISIONS.md).

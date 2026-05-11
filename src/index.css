@@ -1,7 +1,332 @@
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
+
+/* Lyken brand tokens for the early visual system. Avoid neon, generic SaaS blues, and pure black/white as primary backgrounds. */
+@theme {
+  --color-lyken-deep: #0b1f1a;
+  --color-lyken-emerald: #10362e;
+  --color-lyken-teal: #164c3f;
+  --color-lyken-gold: #d4b47a;
+  --color-lyken-gold-warm: #b8924f;
+  --color-lyken-black: #1a1a1a;
+
+  --color-lyken-text: #f4efe3;
+  --color-lyken-text-muted: rgb(244 239 227 / 0.72);
+  --color-lyken-text-soft: rgb(244 239 227 / 0.60);
+  --color-lyken-gold-line-20: rgb(212 180 122 / 0.20);
+  --color-lyken-gold-line-30: rgb(212 180 122 / 0.30);
+  --color-lyken-gold-line-45: rgb(212 180 122 / 0.45);
+  --color-lyken-gold-border: rgb(212 180 122 / 0.25);
+
+  --font-display: "Playfair Display", serif;
+  /* Satoshi should be added when available as the official brand body typeface. Inter remains a fallback, not the main identity font. */
+  --font-sans: "Satoshi", "Inter", system-ui, sans-serif;
+}
 
 html,
 body,
 #root {
   min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --lyken-space-detail: 4px;
+  --lyken-space-detail-md: 8px;
+  --lyken-space-detail-lg: 12px;
+  --lyken-space-inline: 16px;
+  --lyken-space-inline-lg: 24px;
+  --lyken-space-internal: 32px;
+  --lyken-space-block: 48px;
+  --lyken-space-block-lg: 64px;
+  --lyken-space-section-sm: 80px;
+  --lyken-space-section: 96px;
+  --lyken-space-section-lg: 128px;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 82% 12%, rgb(212 180 122 / 0.08), transparent 28rem),
+    radial-gradient(circle at 8% 88%, rgb(22 76 63 / 0.28), transparent 30rem),
+    linear-gradient(180deg, rgb(11 31 26 / 0.96), var(--color-lyken-deep));
+  color: var(--color-lyken-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+}
+
+p {
+  line-height: 1.75;
+}
+
+a,
+button {
+  text-underline-offset: 4px;
+}
+
+a {
+  color: inherit;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+a:hover {
+  color: var(--color-lyken-gold);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-lyken-gold);
+  outline-offset: 4px;
+}
+
+:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+::selection {
+  background-color: var(--color-lyken-gold);
+  color: var(--color-lyken-deep);
+}
+
+html {
+  scrollbar-color: rgb(212 180 122 / 0.38) var(--color-lyken-deep);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-lyken-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(212 180 122 / 0.28);
+  border: 3px solid var(--color-lyken-deep);
+}
+
+@layer components {
+  .lyken-surface-texture {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .lyken-surface-texture::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    content: "";
+    background:
+      radial-gradient(circle at center, transparent 0, rgb(11 31 26 / 0.28) 72%),
+      repeating-linear-gradient(
+        135deg,
+        rgb(244 239 227 / 0.018) 0,
+        rgb(244 239 227 / 0.018) 1px,
+        transparent 1px,
+        transparent 5px
+      );
+    pointer-events: none;
+  }
+
+  .lyken-mesh-panel {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lyken-mesh-panel::after {
+    position: absolute;
+    inset: auto -8% -16% auto;
+    width: min(620px, 88vw);
+    height: 320px;
+    content: "";
+    /* Structured early-phase asset; replace the SVG file with the official digital mesh when approved. */
+    background: url("./assets/mesh/gold-digital-mesh.svg") center / contain no-repeat;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  .lyken-card {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(24px, 4vw, 40px);
+    border-width: 1px;
+    color: var(--color-lyken-text);
+    box-shadow: 0 18px 42px rgb(0 0 0 / 0.12);
+    transition:
+      border-color 180ms ease,
+      background-color 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .lyken-card::before {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background:
+      linear-gradient(135deg, rgb(212 180 122 / 0.08), transparent 34%),
+      radial-gradient(circle at 100% 0, rgb(212 180 122 / 0.08), transparent 16rem);
+    opacity: 0.72;
+    pointer-events: none;
+  }
+
+  .lyken-card > * {
+    position: relative;
+  }
+
+  .lyken-card:hover {
+    border-color: var(--color-lyken-gold-line-45);
+    background-color: rgb(16 54 46 / 0.82);
+    box-shadow: 0 20px 48px rgb(0 0 0 / 0.16);
+    transform: translateY(-2px);
+  }
+
+  .lyken-card:focus-within {
+    border-color: var(--color-lyken-gold);
+  }
+
+  .lyken-text-hero {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 6.75rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+  }
+
+  .lyken-text-section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 5vw, 4.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  .lyken-text-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+
+  .lyken-text-body {
+    max-width: 640px;
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 1.4vw, 1.125rem);
+    line-height: 1.75;
+  }
+
+  .lyken-text-button {
+    font-family: var(--font-sans);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .lyken-text-card-title {
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .lyken-reading {
+    max-width: 640px;
+  }
+
+  .lyken-reading-wide {
+    max-width: 720px;
+  }
+
+  .lyken-reading-narrow {
+    max-width: 560px;
+  }
+
+  .lyken-section-space {
+    padding-block: clamp(80px, 10vw, var(--lyken-space-section-lg));
+  }
+
+  .lyken-editorial-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .lyken-line {
+    height: 1px;
+    background-color: var(--color-lyken-gold-line-30);
+  }
+
+  .lyken-border-subtle {
+    border-color: var(--color-lyken-gold-line-20);
+  }
+
+  .lyken-border-default {
+    border-color: var(--color-lyken-gold-line-30);
+  }
+
+  .lyken-border-strong {
+    border-color: var(--color-lyken-gold-line-45);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .lyken-editorial-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 768px) {
+    .lyken-editorial-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 32px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .lyken-editorial-grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 32px;
+    }
+  }
 }

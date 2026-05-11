@@ -1,0 +1,8 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="lyken-favicon-title">
+  <!-- Temporary placeholder favicon based on the LK monogram. Replace before final launch. -->
+  <title id="lyken-favicon-title">Lyken favicon</title>
+  <rect width="64" height="64" fill="#0B1F1A"/>
+  <rect x="9.5" y="9.5" width="45" height="45" stroke="#D4B47A" stroke-opacity="0.45"/>
+  <path d="M21 18V47H35" stroke="#D4B47A" stroke-width="3" stroke-linecap="square"/>
+  <path d="M42 18L30 32L43 47" stroke="#D4B47A" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+</svg>

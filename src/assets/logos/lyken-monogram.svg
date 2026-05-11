@@ -1,0 +1,7 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="lyken-monogram-title">
+  <title id="lyken-monogram-title">Lyken LK monogram</title>
+  <rect x="18" y="18" width="124" height="124" stroke="#D4B47A" stroke-opacity="0.45" stroke-width="1"/>
+  <path d="M51 42V118H88" stroke="#D4B47A" stroke-width="5" stroke-linecap="square"/>
+  <path d="M101 42L72 78L104 118" stroke="#D4B47A" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M81 42V118" stroke="#B8924F" stroke-opacity="0.72" stroke-width="1"/>
+</svg>
