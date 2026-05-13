@@ -35,7 +35,7 @@ What We Bring to Life
 ## Português
 
 ```txt
-O Que Damos Vida
+O Que Trazemos à Vida
 ```
 
 ## Alternativa

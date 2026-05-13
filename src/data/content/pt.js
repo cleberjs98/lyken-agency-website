@@ -1,10 +1,16 @@
 // Copy proposta com base em docs/CONTENT_COPY_DECK.md; a aprovação final está registrada em docs/OPEN_DECISIONS.md.
 export const pt = {
   meta: {
-    title: "Lyken Agency - Estratégia Inteligente. Marcas Inesquecíveis.",
+    title: "Lyken Agency — Estratégia Inteligente. Marcas Inesquecíveis.",
     description:
       "A Lyken Agency une branding, marketing digital, tecnologia e soluções com inteligência artificial para ajudar negócios a construir, posicionar e crescer.",
     language: "pt",
+  },
+  validation: {
+    nameRequired: "Por favor, informe seu nome.",
+    emailInvalid: "Por favor, informe um email válido.",
+    serviceRequired: "Por favor, selecione um serviço.",
+    messageRequired: "Por favor, escreva uma breve mensagem.",
   },
   navigation: {
     brandLabel: "Lyken Agency",
@@ -25,11 +31,11 @@ export const pt = {
     },
   },
   loading: {
-    phrase: "Da ideia à marca viva.",
+    phrase: "Da ideia ao branding.",
   },
   hero: {
     concept: "Da Ideia à Marca Viva",
-    narrative: "Ideia -> Estrutura -> Identidade -> Presença Digital -> Inteligência -> Crescimento",
+    narrative: "Ideia → Estrutura → Identidade → Presença Digital → Inteligência → Crescimento",
     headline: "Transformamos ideias em marcas digitais vivas.",
     subheadline:
       "A Lyken Agency combina estratégia, branding, tecnologia e inteligência para transformar ideias em experiências digitais estruturadas, memoráveis e escaláveis.",
@@ -45,63 +51,95 @@ export const pt = {
   },
   journey: {
     id: "journey",
+    sectionLabel: "Jornada",
     title: "Uma marca não é simplesmente criada. Ela é moldada, estruturada e trazida à vida.",
+    intro:
+      "Da primeira possibilidade ao crescimento digital, a Lyken conduz a transformação da marca com clareza, estrutura, inteligência e intenção.",
+    continueCta: {
+      label: "Continuar para o que trazemos à vida",
+      href: "#services",
+    },
     stages: [
       {
         id: "spark",
-        label: "A Faísca",
+        eyebrow: "01 — O Começo",
+        label: "O Começo",
         title: "Toda marca começa como uma possibilidade.",
         description:
           "Antes de uma marca ter nome, voz ou identidade visual, ela começa como uma ideia à espera de direção.",
+        visualConcept:
+          "Espaço vazio em verde profundo com um único ponto champagne-gold respirando de forma sutil.",
+        keywords: ["visão", "intenção", "possibilidade"],
         order: 1,
       },
       {
         id: "structure",
+        eyebrow: "02 — A Estrutura",
         label: "A Estrutura",
         title: "A estratégia transforma possibilidade em direção.",
         description:
           "Organizamos ideias em posicionamento, narrativa e estrutura para que cada decisão tenha um propósito claro.",
+        visualConcept:
+          "Linhas editoriais finas, pontos conectados e módulos estruturais formando um sistema.",
+        keywords: ["clareza", "método", "direção", "posicionamento", "estrutura"],
         order: 2,
       },
       {
         id: "identity",
+        eyebrow: "03 — A Identidade",
         label: "A Identidade",
         title: "Uma marca se torna real quando pode ser vista, compreendida e lembrada.",
         description:
           "Criamos sistemas visuais e verbais que dão presença, consistência e reconhecimento à marca.",
+        visualConcept:
+          "Composição editorial de marca com monograma LK, tipografia Playfair, detalhes dourados e módulos de identidade.",
+        keywords: ["identidade visual", "tom de voz", "memória de marca", "posicionamento", "nome", "sistema"],
         order: 3,
       },
       {
         id: "digital-presence",
+        eyebrow: "04 — A Presença Digital",
         label: "A Presença Digital",
         title: "Transformamos marcas em experiências digitais.",
         description:
           "Sites, plataformas e pontos de contato digitais transformam identidade de marca em interação, clareza e conexão.",
+        visualConcept:
+          "Malha digital mais presente com módulos refinados de interface para website, app, social, e-commerce e pontos digitais.",
+        keywords: ["website", "landing page", "app", "e-commerce", "presença social", "experiência digital"],
         order: 4,
       },
       {
         id: "intelligence",
+        eyebrow: "05 — A Inteligência",
         label: "A Inteligência",
         title: "A tecnologia transforma presença em performance.",
         description:
           "IA, automação e sistemas inteligentes ajudam marcas a operar com mais clareza, velocidade e precisão.",
+        visualConcept:
+          "Pontos conectados, fluxos abstratos de dados e painéis inteligentes sem clichês visuais de IA.",
+        keywords: ["IA", "automação", "workflow", "sistemas", "dados", "performance"],
         order: 5,
       },
       {
         id: "growth",
+        eyebrow: "06 — O Crescimento",
         label: "O Crescimento",
         title: "Uma marca viva evolui, se adapta e cresce.",
         description:
           "O crescimento nasce de um sistema de marca capaz de se adaptar, comunicar e expandir com intenção.",
+        visualConcept:
+          "Malha expandida, mais luz, composição aberta e um sinal discreto de continuidade para a próxima seção.",
+        keywords: ["crescimento", "evolução", "adaptação", "escala", "continuidade"],
         order: 6,
       },
     ],
   },
   services: {
     id: "services",
+    sectionLabel: "Serviços",
     title: "O Que Trazemos à Vida",
     intro:
-      "Nosso trabalho conecta estratégia, criatividade, tecnologia e inteligência para construir marcas com estrutura e presença digital.",
+      "Um sistema de transformação que avança da estratégia e identidade para presença digital, tecnologia e crescimento.",
     items: [
       {
         id: "brand-strategy",
@@ -140,7 +178,7 @@ export const pt = {
         title: "Plataformas Web",
         description:
           "Sites, aplicativos web, e-commerce, portais de clientes e experiências digitais responsivas construídas para necessidades reais de negócio.",
-        icon: "layout",
+        icon: "layers",
         order: 5,
       },
       {
@@ -153,44 +191,9 @@ export const pt = {
       },
     ],
   },
-  transformationLayers: {
-    id: "transformation-layers",
-    title: "A transformação acontece em camadas.",
-    layers: [
-      {
-        id: "clarity",
-        title: "Clareza",
-        description: "Entender o negócio, o público e a oportunidade.",
-        order: 1,
-      },
-      {
-        id: "strategy",
-        title: "Estratégia",
-        description: "Definir direção antes da execução.",
-        order: 2,
-      },
-      {
-        id: "identity",
-        title: "Identidade",
-        description: "Construir como a marca se apresenta, comunica e é percebida.",
-        order: 3,
-      },
-      {
-        id: "technology",
-        title: "Tecnologia",
-        description: "Transformar a marca em experiência digital.",
-        order: 4,
-      },
-      {
-        id: "growth",
-        title: "Crescimento",
-        description: "Expandir presença com inteligência e consistência.",
-        order: 5,
-      },
-    ],
-  },
   process: {
     id: "process",
+    sectionLabel: "Processo",
     title: "Um processo estruturado para transformação criativa.",
     steps: [
       {
@@ -233,6 +236,7 @@ export const pt = {
   },
   solutions: {
     id: "solutions",
+    sectionLabel: "Soluções",
     title: "Soluções para cada estágio do seu negócio.",
     items: [
       {
@@ -267,6 +271,7 @@ export const pt = {
   },
   whyLyken: {
     id: "why-lyken",
+    sectionLabel: "Por Que Lyken",
     title: "Porque marcas modernas precisam de mais do que design.",
     points: [
       { id: "strategy-before-execution", text: "Estratégia antes da execução", order: 1 },
@@ -291,6 +296,7 @@ export const pt = {
   },
   contact: {
     id: "contact",
+    sectionLabel: "Contato",
     finalCta: {
       title: "Pronto para transformar sua ideia em uma marca viva?",
       text: "Vamos construir a próxima etapa do seu negócio com estratégia, design, tecnologia e inteligência.",
@@ -310,6 +316,7 @@ export const pt = {
           placeholder: "Seu nome",
           type: "text",
           required: true,
+          validationKey: "nameRequired",
           order: 1,
         },
         {
@@ -319,6 +326,7 @@ export const pt = {
           placeholder: "Nome da sua empresa",
           type: "text",
           required: false,
+          validationKey: null,
           order: 2,
         },
         {
@@ -328,6 +336,7 @@ export const pt = {
           placeholder: "voce@empresa.com",
           type: "email",
           required: true,
+          validationKey: "emailInvalid",
           order: 3,
         },
         {
@@ -337,6 +346,7 @@ export const pt = {
           placeholder: "Seu telefone",
           type: "tel",
           required: false,
+          validationKey: null,
           order: 4,
         },
         {
@@ -346,6 +356,7 @@ export const pt = {
           placeholder: "Selecione um serviço",
           type: "select",
           required: true,
+          validationKey: "serviceRequired",
           order: 5,
         },
         {
@@ -355,6 +366,7 @@ export const pt = {
           placeholder: "Conte o que você deseja construir",
           type: "textarea",
           required: true,
+          validationKey: "messageRequired",
           order: 6,
         },
       ],
@@ -368,22 +380,21 @@ export const pt = {
         { id: "ai-solution", label: "Solução com IA", value: "ai-solution", order: 7 },
         { id: "not-sure-yet", label: "Ainda não tenho certeza", value: "not-sure-yet", order: 8 },
       ],
-      validationMessages: {
-        nameRequired: "Por favor, informe seu nome.",
-        emailInvalid: "Por favor, informe um email válido.",
-        serviceRequired: "Por favor, selecione um serviço.",
-        messageRequired: "Por favor, escreva uma breve mensagem.",
-      },
       successMessage:
         "Sua mensagem foi preparada. Vamos analisar sua solicitação e retornar em breve.",
     },
   },
   footer: {
     tagline: "Estratégia Inteligente. Marcas Inesquecíveis.",
-    brandLine: "Lyken Agency - Estratégia Inteligente. Marcas Inesquecíveis.",
+    brandLine: "Lyken Agency — Estratégia Inteligente. Marcas Inesquecíveis.",
     navigationLabel: "Navegação",
     contactLabel: "Contato",
     socialLabel: "Social",
+    pendingLabel: "Em aprovação",
+    logo: {
+      src: "/logos/lyken-logo.svg",
+      alt: "Lyken Agency",
+    },
     links: [
       { id: "about", label: "Sobre", href: "#about", order: 1 },
       { id: "services", label: "Serviços", href: "#services", order: 2 },
@@ -392,12 +403,13 @@ export const pt = {
       { id: "contact", label: "Contato", href: "#contact", order: 5 },
     ],
     socialLinks: [
-      { id: "instagram", label: "Instagram", href: "#", order: 1 },
-      { id: "linkedin", label: "LinkedIn", href: "#", order: 2 },
+      { id: "instagram", label: "Instagram", href: null, order: 1 },
+      { id: "linkedin", label: "LinkedIn", href: null, order: 2 },
     ],
     contact: {
-      email: "hello@lyken.agency",
       emailLabel: "Email",
+      email: null,
+      emailPendingText: "Email oficial em aprovação",
     },
     cta: {
       label: "Iniciar um Projeto",

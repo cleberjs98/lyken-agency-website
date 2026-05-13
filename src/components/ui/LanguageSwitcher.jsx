@@ -2,10 +2,12 @@ const languageLabels = {
   en: {
     short: "EN",
     ariaLabel: "Change language to English",
+    activeLabel: "English active",
   },
   pt: {
     short: "PT",
     ariaLabel: "Alterar idioma para português",
+    activeLabel: "Português ativo",
   },
 }
 
@@ -30,15 +32,16 @@ function LanguageSwitcher({ language, setLanguage, supportedLanguages }) {
             <button
               aria-label={label.ariaLabel}
               aria-pressed={isActive}
-              className={`min-h-7 px-1 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lyken-gold ${
+              className={`min-h-7 border px-2 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lyken-gold ${
                 isActive
-                  ? "text-lyken-gold"
-                  : "text-lyken-text-soft hover:text-lyken-text"
+                  ? "border-lyken-gold-line-45 bg-lyken-gold/10 text-lyken-gold"
+                  : "border-transparent text-lyken-text-soft hover:border-lyken-gold-line-20 hover:text-lyken-text"
               }`}
               onClick={() => setLanguage(languageCode)}
               type="button"
             >
               {label.short}
+              {isActive ? <span className="sr-only"> {label.activeLabel}</span> : null}
             </button>
           </span>
         )

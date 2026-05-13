@@ -1,10 +1,16 @@
 // Proposed copy based on docs/CONTENT_COPY_DECK.md; final approval is tracked in docs/OPEN_DECISIONS.md.
 export const en = {
   meta: {
-    title: "Lyken Agency - Intelligent Strategy. Unforgettable Brands.",
+    title: "Lyken Agency — Intelligent Strategy. Unforgettable Brands.",
     description:
       "Lyken Agency combines branding, digital marketing, technology and AI-powered solutions to help businesses build, position and grow.",
     language: "en",
+  },
+  validation: {
+    nameRequired: "Please enter your name.",
+    emailInvalid: "Please enter a valid email.",
+    serviceRequired: "Please select a service.",
+    messageRequired: "Please write a short message.",
   },
   navigation: {
     brandLabel: "Lyken Agency",
@@ -25,11 +31,11 @@ export const en = {
     },
   },
   loading: {
-    phrase: "From idea to living brand.",
+    phrase: "From idea to branding.",
   },
   hero: {
     concept: "From Idea to Living Brand",
-    narrative: "Idea -> Structure -> Identity -> Digital Presence -> Intelligence -> Growth",
+    narrative: "Idea → Structure → Identity → Digital Presence → Intelligence → Growth",
     headline: "We turn ideas into living digital brands.",
     subheadline:
       "Lyken Agency combines strategy, branding, technology and intelligence to transform ideas into structured, memorable and scalable digital experiences.",
@@ -45,63 +51,95 @@ export const en = {
   },
   journey: {
     id: "journey",
+    sectionLabel: "Journey",
     title: "A brand is not simply created. It is shaped, structured and brought to life.",
+    intro:
+      "From the first possibility to digital growth, Lyken guides the transformation of a brand with clarity, structure, intelligence and intention.",
+    continueCta: {
+      label: "Continue to what we bring to life",
+      href: "#services",
+    },
     stages: [
       {
         id: "spark",
+        eyebrow: "01 — The Spark",
         label: "The Spark",
         title: "Every brand begins as a possibility.",
         description:
           "Before a brand has a name, a voice or a visual identity, it begins as an idea waiting for direction.",
+        visualConcept:
+          "Empty deep green space with a single champagne-gold point breathing subtly.",
+        keywords: ["vision", "intention", "possibility"],
         order: 1,
       },
       {
         id: "structure",
+        eyebrow: "02 — The Structure",
         label: "The Structure",
         title: "Strategy transforms possibility into direction.",
         description:
           "We organize ideas into positioning, narrative and structure so every decision has a clear purpose.",
+        visualConcept:
+          "Thin editorial lines, connected points and quiet structural modules forming a system.",
+        keywords: ["clarity", "method", "direction", "positioning", "structure"],
         order: 2,
       },
       {
         id: "identity",
+        eyebrow: "03 — The Identity",
         label: "The Identity",
         title: "A brand becomes real when it can be seen, understood and remembered.",
         description:
           "We shape visual and verbal systems that give the brand presence, consistency and recognition.",
+        visualConcept:
+          "An editorial brand composition with the LK monogram, Playfair typography, gold details and identity modules.",
+        keywords: ["visual identity", "tone of voice", "brand memory", "positioning", "name", "system"],
         order: 3,
       },
       {
         id: "digital-presence",
+        eyebrow: "04 — The Digital Presence",
         label: "The Digital Presence",
         title: "We transform brands into digital experiences.",
         description:
           "Websites, platforms and digital touchpoints turn brand identity into interaction, clarity and connection.",
+        visualConcept:
+          "A more present digital mesh with refined interface modules for website, app, social, e-commerce and digital touchpoints.",
+        keywords: ["website", "landing page", "app", "e-commerce", "social presence", "digital experience"],
         order: 4,
       },
       {
         id: "intelligence",
+        eyebrow: "05 — The Intelligence",
         label: "The Intelligence",
         title: "Technology turns presence into performance.",
         description:
           "AI, automation and intelligent systems help brands operate with more clarity, speed and precision.",
+        visualConcept:
+          "Connected points, abstract data flows and intelligent panels without AI cliches.",
+        keywords: ["AI", "automation", "workflow", "systems", "data", "performance"],
         order: 5,
       },
       {
         id: "growth",
+        eyebrow: "06 — The Growth",
         label: "The Growth",
         title: "A living brand evolves, adapts and grows.",
         description:
           "Growth comes from a brand system that can adapt, communicate and expand with intention.",
+        visualConcept:
+          "An expanded mesh, more light, open composition and a discreet continuity cue toward the next section.",
+        keywords: ["growth", "evolution", "adaptation", "scale", "continuity"],
         order: 6,
       },
     ],
   },
   services: {
     id: "services",
+    sectionLabel: "Services",
     title: "What We Bring to Life",
     intro:
-      "Our work connects strategy, creativity, technology and intelligence to build brands with structure and digital presence.",
+      "A system of transformation that moves from strategy and identity into digital presence, technology and growth.",
     items: [
       {
         id: "brand-strategy",
@@ -140,7 +178,7 @@ export const en = {
         title: "Web Platforms",
         description:
           "Websites, web apps, e-commerce, client portals and responsive digital experiences built for real business needs.",
-        icon: "layout",
+        icon: "layers",
         order: 5,
       },
       {
@@ -153,44 +191,9 @@ export const en = {
       },
     ],
   },
-  transformationLayers: {
-    id: "transformation-layers",
-    title: "Transformation happens in layers.",
-    layers: [
-      {
-        id: "clarity",
-        title: "Clarity",
-        description: "Understanding the business, the audience and the opportunity.",
-        order: 1,
-      },
-      {
-        id: "strategy",
-        title: "Strategy",
-        description: "Defining direction before execution.",
-        order: 2,
-      },
-      {
-        id: "identity",
-        title: "Identity",
-        description: "Shaping what the brand looks, sounds and feels like.",
-        order: 3,
-      },
-      {
-        id: "technology",
-        title: "Technology",
-        description: "Turning the brand into digital experience.",
-        order: 4,
-      },
-      {
-        id: "growth",
-        title: "Growth",
-        description: "Expanding presence with intelligence and consistency.",
-        order: 5,
-      },
-    ],
-  },
   process: {
     id: "process",
+    sectionLabel: "Process",
     title: "A structured process for creative transformation.",
     steps: [
       {
@@ -233,6 +236,7 @@ export const en = {
   },
   solutions: {
     id: "solutions",
+    sectionLabel: "Solutions",
     title: "Designed for every stage of your business.",
     items: [
       {
@@ -267,6 +271,7 @@ export const en = {
   },
   whyLyken: {
     id: "why-lyken",
+    sectionLabel: "Why Lyken",
     title: "Because modern brands need more than design.",
     points: [
       { id: "strategy-before-execution", text: "Strategy before execution", order: 1 },
@@ -291,6 +296,7 @@ export const en = {
   },
   contact: {
     id: "contact",
+    sectionLabel: "Contact",
     finalCta: {
       title: "Ready to transform your idea into a living brand?",
       text: "Let's build the next stage of your business with strategy, design, technology and intelligence.",
@@ -310,6 +316,7 @@ export const en = {
           placeholder: "Your name",
           type: "text",
           required: true,
+          validationKey: "nameRequired",
           order: 1,
         },
         {
@@ -319,6 +326,7 @@ export const en = {
           placeholder: "Your business name",
           type: "text",
           required: false,
+          validationKey: null,
           order: 2,
         },
         {
@@ -328,6 +336,7 @@ export const en = {
           placeholder: "you@business.com",
           type: "email",
           required: true,
+          validationKey: "emailInvalid",
           order: 3,
         },
         {
@@ -337,6 +346,7 @@ export const en = {
           placeholder: "Your phone number",
           type: "tel",
           required: false,
+          validationKey: null,
           order: 4,
         },
         {
@@ -346,6 +356,7 @@ export const en = {
           placeholder: "Select a service",
           type: "select",
           required: true,
+          validationKey: "serviceRequired",
           order: 5,
         },
         {
@@ -355,6 +366,7 @@ export const en = {
           placeholder: "Tell us what you want to build",
           type: "textarea",
           required: true,
+          validationKey: "messageRequired",
           order: 6,
         },
       ],
@@ -368,22 +380,21 @@ export const en = {
         { id: "ai-solution", label: "AI Solution", value: "ai-solution", order: 7 },
         { id: "not-sure-yet", label: "Not sure yet", value: "not-sure-yet", order: 8 },
       ],
-      validationMessages: {
-        nameRequired: "Please enter your name.",
-        emailInvalid: "Please enter a valid email.",
-        serviceRequired: "Please select a service.",
-        messageRequired: "Please write a short message.",
-      },
       successMessage:
         "Your message has been prepared. We will review your request and get back to you soon.",
     },
   },
   footer: {
     tagline: "Intelligent Strategy. Unforgettable Brands.",
-    brandLine: "Lyken Agency - Intelligent Strategy. Unforgettable Brands.",
+    brandLine: "Lyken Agency — Intelligent Strategy. Unforgettable Brands.",
     navigationLabel: "Navigation",
     contactLabel: "Contact",
     socialLabel: "Social",
+    pendingLabel: "Pending approval",
+    logo: {
+      src: "/logos/lyken-logo.svg",
+      alt: "Lyken Agency",
+    },
     links: [
       { id: "about", label: "About", href: "#about", order: 1 },
       { id: "services", label: "Services", href: "#services", order: 2 },
@@ -392,12 +403,13 @@ export const en = {
       { id: "contact", label: "Contact", href: "#contact", order: 5 },
     ],
     socialLinks: [
-      { id: "instagram", label: "Instagram", href: "#", order: 1 },
-      { id: "linkedin", label: "LinkedIn", href: "#", order: 2 },
+      { id: "instagram", label: "Instagram", href: null, order: 1 },
+      { id: "linkedin", label: "LinkedIn", href: null, order: 2 },
     ],
     contact: {
-      email: "hello@lyken.agency",
       emailLabel: "Email",
+      email: null,
+      emailPendingText: "Official email pending approval",
     },
     cta: {
       label: "Start a Project",

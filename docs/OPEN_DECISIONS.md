@@ -395,3 +395,17 @@ Needed only if analytics, tracking or cookies are added.
 [ ] Packages decision made
 [ ] Launch strategy selected
 ```
+
+---
+
+## Current Fase 08 Implementation Guardrails
+
+Status: Approved for current implementation tracking.
+
+Decisions:
+
+- The restored dense loading experience in `src/components/motion/LoadingExperience.jsx` must be preserved unless the user explicitly requests a visual redesign.
+- Current loading includes particles, connecting lines, digital mesh, LYKEN letter formation, Agency signature and bilingual phrase.
+- Latest loading tuning accelerated particle convergence, moved `Agency` earlier, and made the final `LYKEN` state more gold with reduced pale letter light.
+- Hero motion and DigitalMesh should not be changed during technical menu or documentation fixes.
+- Contact/Form exists visually, but final logic, validation, submission, integrations and conversion optimization remain frozen until Fase 09 - Contact & Conversion.

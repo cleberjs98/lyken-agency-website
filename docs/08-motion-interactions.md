@@ -434,3 +434,36 @@ As animações fazem o site parecer vivo, tecnológico e transformador sem perde
 
 Se sim, aprovar.  
 Se não, reduzir, ajustar ou remover movimentos.
+
+---
+
+# Nota de implementacao atual da Fase 08
+
+Status: motion system implementado e aguardando nova auditoria visual.
+
+Arquivos principais implementados:
+
+- `src/components/motion/MotionReveal.jsx`
+- `src/components/motion/AnimatedLine.jsx`
+- `src/components/motion/DigitalMesh.jsx`
+- `src/components/motion/LoadingExperience.jsx`
+- `src/utils/motionTokens.js`
+- `src/components/layout/MobileMenu.jsx`
+- `src/components/layout/Navbar.jsx`
+
+Estado atual:
+
+- scroll reveal e staggered reveal aplicados nas secoes existentes;
+- hovers premium aplicados em botoes/cards conforme padroes atuais;
+- AnimatedLine e DigitalMesh disponiveis como componentes reutilizaveis;
+- loading experience densa restaurada e refinada em timing/cor;
+- Hero preservado conforme estado visual aprovado pelo usuario antes da correcao tecnica;
+- menu mobile corrigido tecnicamente com scroll lock e foco basico;
+- Contact permanece visual/preliminar e congelado para evolucao funcional ate Fase 09.
+
+Guardrails para futuras correcoes:
+
+- nao alterar `LoadingExperience.jsx` ou `Hero.jsx` durante correcoes tecnicas de menu;
+- nao simplificar ou redesenhar o loading sem aprovacao visual explicita;
+- nao modificar motion principal, layout, copy, cores, tipografia ou DigitalMesh em auditorias tecnicas pequenas;
+- tratar Contact/Conversion somente na Fase 09.

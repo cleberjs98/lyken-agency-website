@@ -556,3 +556,33 @@ O carregamento do site já comunica a experiência de nascimento, transformaçã
 Se a resposta for sim, a Fase 04 está aprovada.
 
 Se a resposta for não, revisar conceito, timing, malha, monograma e transição antes de continuar.
+
+---
+
+# Nota de implementacao atual
+
+Status: implementado no projeto atual em `src/components/motion/LoadingExperience.jsx`.
+
+Estado atual:
+
+- loading denso e conceitual restaurado;
+- deep green background com textura e profundidade;
+- pontos, linhas, particulas, malha e sweeps visuais;
+- formacao tipografica de `LYKEN`;
+- assinatura `Agency`;
+- frase bilingue controlada por idioma;
+- transicao suave para o site;
+- suporte basico a `prefers-reduced-motion`.
+
+Ajustes recentes:
+
+- a convergencia das bolinhas para o centro foi acelerada para melhorar ritmo;
+- `Agency` aparece mais cedo depois da formacao de `LYKEN`;
+- o estado final de `LYKEN` foi ajustado para mais gold;
+- o brilho claro das letras foi reduzido para nao disputar com a presenca dourada da marca.
+
+Guardrail:
+
+- nao remover, simplificar ou substituir esta experiencia sem validacao visual explicita;
+- nao transformar o loading em spinner generico;
+- nao alterar Hero como efeito colateral de ajustes no loading.

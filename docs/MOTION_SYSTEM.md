@@ -390,3 +390,30 @@ Do not use:
 [ ] No excessive animation
 [ ] Performance remains acceptable
 ```
+
+---
+
+## Current Implementation Notes
+
+The current project implementation includes the Fase 08 motion base.
+
+Loading:
+
+- implemented in `src/components/motion/LoadingExperience.jsx`;
+- uses a dense brand sequence with particles, connecting lines, digital mesh, LYKEN letter formation, Agency signature and bilingual phrase;
+- recent refinements made particle convergence faster, moved the Agency signature earlier, and pushed the LYKEN final state toward stronger gold instead of pale white;
+- future technical fixes must not simplify or remove this loading without explicit visual approval.
+
+Hero:
+
+- current Hero motion and digital mesh must be preserved unless a future task explicitly targets Hero visuals.
+
+Mobile menu:
+
+- scroll is locked while the mobile menu is open;
+- basic focus moves into the menu on open and returns to the trigger on close;
+- no visual menu redesign was made for this correction.
+
+Contact:
+
+- Contact exists visually, but functional form evolution is frozen until Fase 09.

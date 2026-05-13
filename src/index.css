@@ -28,6 +28,7 @@ html,
 body,
 #root {
   min-height: 100%;
+  background-color: var(--color-lyken-deep);
 }
 
 html {
@@ -191,7 +192,25 @@ html {
     background:
       linear-gradient(135deg, rgb(212 180 122 / 0.08), transparent 34%),
       radial-gradient(circle at 100% 0, rgb(212 180 122 / 0.08), transparent 16rem);
-    opacity: 0.72;
+    opacity: 0.62;
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
+    pointer-events: none;
+  }
+
+  .lyken-card::after {
+    position: absolute;
+    inset: auto clamp(24px, 4vw, 40px) clamp(24px, 4vw, 40px);
+    height: 1px;
+    content: "";
+    background: linear-gradient(90deg, var(--color-lyken-gold), transparent);
+    opacity: 0;
+    transform: scaleX(0.36);
+    transform-origin: left;
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
     pointer-events: none;
   }
 
@@ -202,12 +221,92 @@ html {
   .lyken-card:hover {
     border-color: var(--color-lyken-gold-line-45);
     background-color: rgb(16 54 46 / 0.82);
-    box-shadow: 0 20px 48px rgb(0 0 0 / 0.16);
+    box-shadow:
+      0 20px 48px rgb(0 0 0 / 0.16),
+      0 0 0 1px rgb(212 180 122 / 0.04);
     transform: translateY(-2px);
+  }
+
+  .lyken-card:hover::before {
+    opacity: 0.84;
+    transform: translate3d(0, -1px, 0);
+  }
+
+  .lyken-card:hover::after {
+    opacity: 0.48;
+    transform: scaleX(1);
   }
 
   .lyken-card:focus-within {
     border-color: var(--color-lyken-gold);
+  }
+
+  .lyken-service-card:focus-within::after {
+    opacity: 0.58;
+    transform: scaleX(1);
+  }
+
+  .lyken-service-card:hover .lyken-service-card-icon {
+    transform: translateY(-2px);
+  }
+
+  .lyken-service-card:hover .lyken-service-card-icon,
+  .lyken-card:focus-within .lyken-service-card-icon {
+    color: var(--color-lyken-gold);
+    filter: drop-shadow(0 0 10px rgb(212 180 122 / 0.18));
+  }
+
+  .lyken-button {
+    transform: translateZ(0);
+    box-shadow: 0 0 0 rgb(212 180 122 / 0);
+    transition:
+      border-color 200ms ease,
+      background-color 200ms ease,
+      color 200ms ease,
+      box-shadow 220ms ease;
+  }
+
+  .lyken-button::before {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: linear-gradient(110deg, transparent, rgb(244 239 227 / 0.16), transparent);
+    opacity: 0;
+    transform: translateX(-72%);
+    transition:
+      opacity 220ms ease,
+      transform 420ms ease;
+    pointer-events: none;
+  }
+
+  .lyken-button:hover {
+    box-shadow: 0 10px 26px rgb(212 180 122 / 0.1);
+  }
+
+  .lyken-button:hover::before {
+    opacity: 1;
+    transform: translateX(72%);
+  }
+
+  .lyken-button-line {
+    position: absolute;
+    right: 14px;
+    bottom: 9px;
+    left: 14px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+    opacity: 0;
+    transform: scaleX(0.28);
+    transition:
+      opacity 200ms ease,
+      transform 240ms ease;
+    pointer-events: none;
+  }
+
+  .lyken-button:hover .lyken-button-line,
+  .lyken-button:focus-visible .lyken-button-line {
+    opacity: 0.42;
+    transform: scaleX(1);
   }
 
   .lyken-text-hero {
@@ -269,13 +368,37 @@ html {
   }
 
   .lyken-section-space {
-    padding-block: clamp(80px, 10vw, var(--lyken-space-section-lg));
+    scroll-margin-top: 96px;
+    padding-block: 64px;
   }
 
   .lyken-editorial-grid {
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 24px;
+  }
+
+  .lyken-footer-surface {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .lyken-footer-surface::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    content: "";
+    background:
+      radial-gradient(circle at 12% 18%, rgb(212 180 122 / 0.08), transparent 22rem),
+      radial-gradient(circle at 88% 72%, rgb(22 76 63 / 0.22), transparent 24rem),
+      repeating-linear-gradient(
+        135deg,
+        rgb(244 239 227 / 0.014) 0,
+        rgb(244 239 227 / 0.014) 1px,
+        transparent 1px,
+        transparent 6px
+      );
+    pointer-events: none;
   }
 
   .lyken-line {
@@ -308,15 +431,26 @@ html {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
     }
-  }
 
-  @media (min-width: 640px) {
-    .lyken-editorial-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .lyken-button:hover,
+    .lyken-card:hover {
+      transform: none !important;
+    }
+
+    .lyken-button::before,
+    .lyken-button-line,
+    .lyken-card::after {
+      opacity: 0 !important;
+      transform: none !important;
     }
   }
 
   @media (min-width: 768px) {
+    .lyken-section-space {
+      scroll-margin-top: 104px;
+      padding-block: 80px;
+    }
+
     .lyken-editorial-grid {
       grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 32px;
@@ -324,6 +458,11 @@ html {
   }
 
   @media (min-width: 1024px) {
+    .lyken-section-space {
+      scroll-margin-top: 112px;
+      padding-block: clamp(96px, 9vw, var(--lyken-space-section-lg));
+    }
+
     .lyken-editorial-grid {
       grid-template-columns: repeat(12, minmax(0, 1fr));
       gap: 32px;

@@ -1,9 +1,12 @@
 import { Menu, X } from "lucide-react"
-import { useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 import Button from "../common/Button"
 import Container from "../common/Container"
+import MobileMenu from "./MobileMenu"
 import LanguageSwitcher from "../ui/LanguageSwitcher"
+
+const logoSrc = "/logos/lyken-logo.svg"
 
 function NavLinks({ items, onNavigate }) {
   return items.map((item) => (
@@ -20,18 +23,90 @@ function NavLinks({ items, onNavigate }) {
 
 function Navbar({ content, language, setLanguage, supportedLanguages }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+  const mobileMenuButtonRef = useRef(null)
   const navigation = content.navigation
 
-  const closeMobileMenu = () => setIsMobileMenuOpen(false)
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false)
+    window.requestAnimationFrame(() => {
+      mobileMenuButtonRef.current?.focus()
+    })
+  }, [])
+
+  useEffect(() => {
+    const updateScrolledState = () => {
+      setIsScrolled(window.scrollY > 12)
+    }
+
+    updateScrolledState()
+    window.addEventListener("scroll", updateScrolledState, { passive: true })
+
+    return () => {
+      window.removeEventListener("scroll", updateScrolledState)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return undefined
+    }
+
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") {
+        closeMobileMenu()
+      }
+    }
+
+    window.addEventListener("keydown", closeOnEscape)
+
+    return () => {
+      window.removeEventListener("keydown", closeOnEscape)
+    }
+  }, [closeMobileMenu, isMobileMenuOpen])
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return undefined
+    }
+
+    const previousBodyOverflow = document.body.style.overflow
+    const previousHtmlOverflow = document.documentElement.style.overflow
+
+    document.body.style.overflow = "hidden"
+    document.documentElement.style.overflow = "hidden"
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow
+      document.documentElement.style.overflow = previousHtmlOverflow
+    }
+  }, [isMobileMenuOpen])
 
   return (
-    <header className="sticky top-0 z-50 border-b border-lyken-gold-line-20 bg-lyken-deep/90 backdrop-blur-xl">
-      <Container className="flex min-h-20 items-center justify-between gap-6">
+    <header
+      className={`sticky top-0 z-50 border-b backdrop-blur-xl transition-[background-color,border-color] duration-200 ${
+        isScrolled
+          ? "border-lyken-gold-line-30 bg-lyken-deep/94"
+          : "border-transparent bg-lyken-deep/42"
+      } relative`}
+    >
+      <Container
+        className={`flex items-center justify-between gap-6 transition-[min-height] duration-200 ${
+          isScrolled ? "min-h-16" : "min-h-20"
+        }`}
+      >
         <a
-          className="lyken-text-button text-lyken-text transition-colors duration-200 hover:text-lyken-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lyken-gold"
+          aria-label={navigation.brandLabel}
+          className="inline-flex min-h-12 items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lyken-gold"
           href="#top"
         >
-          {navigation.brandLabel}
+          <img
+            alt=""
+            aria-hidden="true"
+            className="h-10 w-auto max-w-[168px] object-contain md:h-11 md:max-w-[190px]"
+            src={logoSrc}
+          />
+          <span className="sr-only">{navigation.brandLabel}</span>
         </a>
 
         <nav aria-label="Primary navigation" className="hidden items-center gap-7 lg:flex">
@@ -50,6 +125,7 @@ function Navbar({ content, language, setLanguage, supportedLanguages }) {
         </div>
 
         <button
+          aria-controls="mobile-navigation"
           aria-expanded={isMobileMenuOpen}
           aria-label={
             isMobileMenuOpen
@@ -58,6 +134,7 @@ function Navbar({ content, language, setLanguage, supportedLanguages }) {
           }
           className="inline-flex min-h-11 min-w-11 items-center justify-center border border-lyken-gold-line-30 text-lyken-gold transition-colors duration-200 hover:border-lyken-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lyken-gold lg:hidden"
           onClick={() => setIsMobileMenuOpen((current) => !current)}
+          ref={mobileMenuButtonRef}
           type="button"
         >
           {isMobileMenuOpen ? (
@@ -68,30 +145,14 @@ function Navbar({ content, language, setLanguage, supportedLanguages }) {
         </button>
       </Container>
 
-      {isMobileMenuOpen ? (
-        <div className="border-t border-lyken-gold-line-20 bg-lyken-deep/95 lg:hidden">
-          <Container className="flex flex-col gap-6 py-6">
-            <nav aria-label="Mobile navigation" className="flex flex-col gap-4">
-              <NavLinks items={navigation.items} onNavigate={closeMobileMenu} />
-            </nav>
-
-            <div className="flex flex-col gap-4 border-t border-lyken-gold-line-20 pt-5 sm:flex-row sm:items-center sm:justify-between">
-              <LanguageSwitcher
-                language={language}
-                setLanguage={setLanguage}
-                supportedLanguages={supportedLanguages}
-              />
-              <Button
-                className="w-full min-h-10 px-5 py-3 sm:w-auto"
-                href={navigation.cta.href}
-                onClick={closeMobileMenu}
-              >
-                {navigation.cta.label}
-              </Button>
-            </div>
-          </Container>
-        </div>
-      ) : null}
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        language={language}
+        navigation={navigation}
+        onClose={closeMobileMenu}
+        setLanguage={setLanguage}
+        supportedLanguages={supportedLanguages}
+      />
     </header>
   )
 }

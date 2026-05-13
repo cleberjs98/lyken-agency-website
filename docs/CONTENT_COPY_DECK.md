@@ -279,7 +279,7 @@ What We Bring to Life
 
 ### Section Title PT
 
-O Que Damos Vida
+O Que Trazemos à Vida
 
 ### Intro EN
 

@@ -551,3 +551,33 @@ Prefer:
 [ ] Component avoids hardcoded bilingual text
 [ ] Component avoids unnecessary complexity
 ```
+
+---
+
+## Current Component Implementation Notes
+
+Motion components currently present:
+
+- `src/components/motion/LoadingExperience.jsx`
+- `src/components/motion/MotionReveal.jsx`
+- `src/components/motion/AnimatedLine.jsx`
+- `src/components/motion/DigitalMesh.jsx`
+
+LoadingExperience:
+
+- current implementation is the restored dense loading experience;
+- it includes LYKEN letter formation, Agency signature, mesh, particles, lines and bilingual phrase;
+- latest visual tuning increased the gold presence of `LYKEN` and reduced overly pale letter light;
+- do not replace it with a simplified loader unless explicitly requested.
+
+MobileMenu and Navbar:
+
+- `MobileMenu.jsx` keeps the existing visual structure;
+- `Navbar.jsx` owns the mobile open/close state;
+- scroll lock is handled while the menu is open;
+- focus is moved to the first mobile link on open and returned to the trigger on close.
+
+Contact:
+
+- `Contact.jsx` exists as a visual/preliminary section;
+- final validation, submission, integrations and conversion optimization belong to Fase 09.
