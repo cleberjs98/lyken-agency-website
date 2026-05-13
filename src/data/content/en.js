@@ -299,7 +299,7 @@ export const en = {
     sectionLabel: "Contact",
     finalCta: {
       title: "Ready to transform your idea into a living brand?",
-      text: "Let's build the next stage of your business with strategy, design, technology and intelligence.",
+      text: "Let’s build the next stage of your business with strategy, design, technology and intelligence.",
       button: {
         label: "Start a Project",
         href: "#contact-form",
@@ -308,6 +308,11 @@ export const en = {
     form: {
       id: "contact-form",
       submitLabel: "Start a Project",
+      loadingLabel: "Preparing Request",
+      successMessage:
+        "Your message has been prepared. We will review your request and get back to you soon.",
+      errorMessage: "Something went wrong. Please try again or contact us directly.",
+      privacyNote: "Your information will only be used to respond to your project request.",
       fields: [
         {
           id: "name",
@@ -380,8 +385,14 @@ export const en = {
         { id: "ai-solution", label: "AI Solution", value: "ai-solution", order: 7 },
         { id: "not-sure-yet", label: "Not sure yet", value: "not-sure-yet", order: 8 },
       ],
-      successMessage:
-        "Your message has been prepared. We will review your request and get back to you soon.",
+    },
+    directContact: {
+      label: "Direct Contact",
+      text: "Official email, WhatsApp and social links are pending approval. This section is prepared for the confirmed contact path.",
+      items: [
+        { id: "email", label: "Email", value: "Official email pending approval", order: 1 },
+        { id: "whatsapp", label: "WhatsApp", value: "Official number pending approval", order: 2 },
+      ],
     },
   },
   footer: {

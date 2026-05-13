@@ -308,6 +308,11 @@ export const pt = {
     form: {
       id: "contact-form",
       submitLabel: "Iniciar um Projeto",
+      loadingLabel: "Preparando Solicitação",
+      successMessage:
+        "Sua mensagem foi preparada. Vamos analisar sua solicitação e retornar em breve.",
+      errorMessage: "Algo deu errado. Por favor, tente novamente ou entre em contato diretamente.",
+      privacyNote: "Suas informações serão usadas apenas para responder à sua solicitação de projeto.",
       fields: [
         {
           id: "name",
@@ -380,8 +385,14 @@ export const pt = {
         { id: "ai-solution", label: "Solução com IA", value: "ai-solution", order: 7 },
         { id: "not-sure-yet", label: "Ainda não tenho certeza", value: "not-sure-yet", order: 8 },
       ],
-      successMessage:
-        "Sua mensagem foi preparada. Vamos analisar sua solicitação e retornar em breve.",
+    },
+    directContact: {
+      label: "Contato Direto",
+      text: "Email oficial, WhatsApp e links sociais ainda estão em aprovação. Esta seção fica preparada para o canal confirmado.",
+      items: [
+        { id: "email", label: "Email", value: "Email oficial em aprovação", order: 1 },
+        { id: "whatsapp", label: "WhatsApp", value: "Número oficial em aprovação", order: 2 },
+      ],
     },
   },
   footer: {
