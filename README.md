@@ -30,6 +30,22 @@ npm run dev
 npm run build
 ```
 
+## Preview
+
+```bash
+npm run preview
+```
+
 ## Deploy
 
-Deploy the project on Vercel after the open launch decisions are approved. The final domain, official email, WhatsApp, and social links are still pending in [docs/OPEN_DECISIONS.md](docs/OPEN_DECISIONS.md).
+Deploy the project on Vercel after the open launch decisions are approved.
+
+Vercel configuration:
+
+- Framework: Vite
+- Build command: `npm run build`
+- Output directory: `dist`
+
+Do not commit API keys, service tokens, `.env` files, or any other sensitive credentials to the repository.
+
+The final domain, official email, WhatsApp, and social links are still pending in [docs/OPEN_DECISIONS.md](docs/OPEN_DECISIONS.md).
