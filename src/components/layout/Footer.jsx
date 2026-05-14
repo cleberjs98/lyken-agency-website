@@ -7,7 +7,7 @@ const monogramSrc = "/logos/lyken-monogram.svg"
 function FooterLink({ link }) {
   return (
     <a
-      className="lyken-text-button text-lyken-text-muted transition-colors duration-200 hover:text-lyken-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lyken-gold"
+      className="lyken-text-button inline-flex min-h-9 items-center text-lyken-text-muted transition-colors duration-200 hover:text-lyken-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lyken-gold"
       href={link.href}
     >
       {link.label}
@@ -23,6 +23,9 @@ function PendingItem({ item, pendingLabel }) {
     </span>
   )
 }
+
+const footerLinkFocusClass =
+  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lyken-gold"
 
 function Footer({ content }) {
   const footer = content.footer
@@ -69,7 +72,9 @@ function Footer({ content }) {
                 {footer.contact.emailLabel}
               </p>
               {footer.contact.email ? (
-                <a href={`mailto:${footer.contact.email}`}>{footer.contact.email}</a>
+                <a className={footerLinkFocusClass} href={`mailto:${footer.contact.email}`}>
+                  {footer.contact.email}
+                </a>
               ) : (
                 <p>{footer.contact.emailPendingText}</p>
               )}
@@ -82,7 +87,7 @@ function Footer({ content }) {
               {footer.socialLinks.map((item) =>
                 item.href ? (
                   <a
-                    className="text-sm text-lyken-text-muted transition-colors duration-200 hover:text-lyken-gold"
+                    className={`text-sm text-lyken-text-muted transition-colors duration-200 hover:text-lyken-gold ${footerLinkFocusClass}`}
                     href={item.href}
                     key={item.id}
                   >

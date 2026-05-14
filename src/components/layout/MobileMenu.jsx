@@ -64,7 +64,9 @@ function MobileMenu({
 
           <div className="flex flex-col gap-4 border-t border-lyken-gold-line-20 pt-5 sm:flex-row sm:items-center sm:justify-between">
             <LanguageSwitcher
+              buttonTabIndex={isOpen ? 0 : -1}
               language={language}
+              onLanguageChange={onClose}
               setLanguage={setLanguage}
               supportedLanguages={supportedLanguages}
             />

@@ -11,7 +11,18 @@ const languageLabels = {
   },
 }
 
-function LanguageSwitcher({ language, setLanguage, supportedLanguages }) {
+function LanguageSwitcher({
+  buttonTabIndex,
+  language,
+  onLanguageChange,
+  setLanguage,
+  supportedLanguages,
+}) {
+  const handleLanguageChange = (languageCode) => {
+    setLanguage(languageCode)
+    onLanguageChange?.(languageCode)
+  }
+
   return (
     <div
       aria-label="Language selection"
@@ -32,12 +43,13 @@ function LanguageSwitcher({ language, setLanguage, supportedLanguages }) {
             <button
               aria-label={label.ariaLabel}
               aria-pressed={isActive}
-              className={`min-h-7 border px-2 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lyken-gold ${
+              className={`min-h-9 border px-2.5 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lyken-gold ${
                 isActive
                   ? "border-lyken-gold-line-45 bg-lyken-gold/10 text-lyken-gold"
                   : "border-transparent text-lyken-text-soft hover:border-lyken-gold-line-20 hover:text-lyken-text"
               }`}
-              onClick={() => setLanguage(languageCode)}
+              onClick={() => handleLanguageChange(languageCode)}
+              tabIndex={buttonTabIndex}
               type="button"
             >
               {label.short}

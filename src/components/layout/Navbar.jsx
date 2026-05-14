@@ -11,7 +11,7 @@ const logoSrc = "/logos/lyken-logo.svg"
 function NavLinks({ items, onNavigate }) {
   return items.map((item) => (
     <a
-      className="lyken-text-button text-lyken-text-muted transition-colors duration-200 hover:text-lyken-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lyken-gold"
+      className="lyken-text-button inline-flex min-h-9 items-center text-lyken-text-muted transition-colors duration-200 hover:text-lyken-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lyken-gold"
       href={item.href}
       key={item.id}
       onClick={onNavigate}

@@ -22,7 +22,7 @@ function Button({
 }) {
   const shouldReduceMotion = useReducedMotion()
   const classes = [
-    "lyken-button lyken-text-button relative inline-flex min-h-11 items-center justify-center overflow-hidden rounded-none border px-6 py-4 transition-colors duration-200 active:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lyken-gold disabled:pointer-events-none disabled:cursor-not-allowed disabled:border-lyken-gold-line-20 disabled:text-lyken-text-soft disabled:opacity-55",
+    "lyken-button lyken-text-button relative inline-flex min-h-11 max-w-full items-center justify-center overflow-hidden rounded-none border px-4 py-4 text-center leading-tight transition-colors duration-200 active:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lyken-gold disabled:pointer-events-none disabled:cursor-not-allowed disabled:border-lyken-gold-line-20 disabled:text-lyken-text-soft disabled:opacity-55 sm:px-6",
     variants[variant] ?? variants.primary,
     disabled && href ? "pointer-events-none cursor-not-allowed opacity-55" : "",
     className,
@@ -41,7 +41,7 @@ function Button({
         whileTap={disabled || shouldReduceMotion ? undefined : { y: 0 }}
         {...props}
       >
-        <span className="relative z-10">{children}</span>
+        <span className="relative z-10 max-w-full whitespace-normal break-words">{children}</span>
         <span aria-hidden="true" className="lyken-button-line" />
       </motion.a>
     )
@@ -57,7 +57,7 @@ function Button({
       whileTap={disabled || shouldReduceMotion ? undefined : { y: 0 }}
       {...props}
     >
-      <span className="relative z-10">{children}</span>
+      <span className="relative z-10 max-w-full whitespace-normal break-words">{children}</span>
       <span aria-hidden="true" className="lyken-button-line" />
     </motion.button>
   )
