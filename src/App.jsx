@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 import Layout from "./components/layout/Layout"
 import Contact from "./components/sections/Contact"
@@ -32,6 +32,10 @@ function setMetaContent(selector, attributes, content) {
 }
 
 function App() {
+  const [isIntroActive, setIsIntroActive] = useState(true)
+  const handleIntroComplete = useCallback(() => {
+    setIsIntroActive(false)
+  }, [])
   const {
     content,
     language,
@@ -71,14 +75,18 @@ function App() {
 
   return (
     <>
-      <LoadingExperience language={language} phrase={content.loading.phrase} />
+      <LoadingExperience
+        language={language}
+        onComplete={handleIntroComplete}
+        phrase={content.loading.phrase}
+      />
       <Layout
         content={content}
         language={language}
         setLanguage={setLanguage}
         supportedLanguages={supportedLanguages}
       >
-        <Hero content={content} />
+        <Hero content={content} isIntroActive={isIntroActive} />
         <Journey content={content} />
         <Services content={content} />
         <Process content={content} />

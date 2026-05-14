@@ -139,15 +139,15 @@ function useCompactViewport() {
   return isCompactViewport
 }
 
-function Hero({ content }) {
+function Hero({ content, isIntroActive = false }) {
   const hero = content.hero
   const shouldReduceMotion = useReducedMotion()
   const [hasMouseInteraction, setHasMouseInteraction] = useState(supportsFinePointer)
   const isCompactViewport = useCompactViewport()
   const pointerX = useMotionValue(0)
   const pointerY = useMotionValue(0)
-  const canUseMouseInteraction = hasMouseInteraction && !shouldReduceMotion
-  const canUseAmbientMotion = !shouldReduceMotion && !isCompactViewport
+  const canUseMouseInteraction = hasMouseInteraction && !shouldReduceMotion && !isIntroActive
+  const canUseAmbientMotion = !shouldReduceMotion && !isCompactViewport && !isIntroActive
 
   const glowX = useSpring(useTransform(pointerX, [-0.5, 0.5], [-36, 36]), {
     damping: 34,
@@ -469,7 +469,7 @@ function Hero({ content }) {
               <span className="h-12 w-px overflow-hidden bg-lyken-gold-line-20">
                 <motion.span
                   className="block h-4 w-px bg-lyken-gold"
-                  animate={shouldReduceMotion ? undefined : { y: [0, 32, 0] }}
+                  animate={shouldReduceMotion || isIntroActive ? undefined : { y: [0, 32, 0] }}
                   transition={{ duration: 2.4, ease: "easeInOut", repeat: Infinity }}
                 />
               </span>

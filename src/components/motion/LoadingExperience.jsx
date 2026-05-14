@@ -152,7 +152,7 @@ const electricFilaments = [
   },
 ]
 
-function LoadingExperience({ language = "en", phrase }) {
+function LoadingExperience({ language = "en", onComplete, phrase }) {
   const [isVisible, setIsVisible] = useState(true)
   const shouldReduceMotion = useReducedMotion()
   const stages = loadingStages[language] ?? loadingStages.en
@@ -162,12 +162,15 @@ function LoadingExperience({ language = "en", phrase }) {
 
   useEffect(() => {
     const timeout = window.setTimeout(
-      () => setIsVisible(false),
+      () => {
+        setIsVisible(false)
+        onComplete?.()
+      },
       shouldReduceMotion ? reducedLoadingDuration : loadingDuration,
     )
 
     return () => window.clearTimeout(timeout)
-  }, [shouldReduceMotion])
+  }, [onComplete, shouldReduceMotion])
 
   const transition = useMemo(
     () =>
