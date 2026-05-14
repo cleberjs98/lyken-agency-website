@@ -11,6 +11,26 @@ import Solutions from "./components/sections/Solutions"
 import WhyLyken from "./components/sections/WhyLyken"
 import useLanguage from "./hooks/useLanguage"
 
+const seoImage = "/images/og-lyken-agency.jpg"
+const ogLocales = {
+  en: "en_US",
+  pt: "pt_BR",
+}
+
+function setMetaContent(selector, attributes, content) {
+  let element = document.querySelector(selector)
+
+  if (!element) {
+    element = document.createElement("meta")
+    Object.entries(attributes).forEach(([name, value]) => {
+      element.setAttribute(name, value)
+    })
+    document.head.appendChild(element)
+  }
+
+  element.setAttribute("content", content)
+}
+
 function App() {
   const {
     content,
@@ -23,14 +43,30 @@ function App() {
     document.documentElement.lang = content.meta.language
     document.title = content.meta.title
 
-    let metaDescription = document.querySelector('meta[name="description"]')
-    if (!metaDescription) {
-      metaDescription = document.createElement("meta")
-      metaDescription.setAttribute("name", "description")
-      document.head.appendChild(metaDescription)
-    }
-
-    metaDescription.setAttribute("content", content.meta.description)
+    setMetaContent(
+      'meta[name="description"]',
+      { name: "description" },
+      content.meta.description,
+    )
+    setMetaContent('meta[property="og:title"]', { property: "og:title" }, content.meta.title)
+    setMetaContent(
+      'meta[property="og:description"]',
+      { property: "og:description" },
+      content.meta.description,
+    )
+    setMetaContent('meta[property="og:image"]', { property: "og:image" }, seoImage)
+    setMetaContent(
+      'meta[property="og:locale"]',
+      { property: "og:locale" },
+      ogLocales[content.meta.language] ?? ogLocales.en,
+    )
+    setMetaContent('meta[name="twitter:title"]', { name: "twitter:title" }, content.meta.title)
+    setMetaContent(
+      'meta[name="twitter:description"]',
+      { name: "twitter:description" },
+      content.meta.description,
+    )
+    setMetaContent('meta[name="twitter:image"]', { name: "twitter:image" }, seoImage)
   }, [content.meta.description, content.meta.language, content.meta.title])
 
   return (
