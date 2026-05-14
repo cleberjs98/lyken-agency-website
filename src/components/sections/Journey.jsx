@@ -43,7 +43,7 @@ function Journey({ content }) {
     <section
       aria-labelledby="journey-title"
       className="relative isolate overflow-hidden border-t border-lyken-gold-line-20 bg-lyken-deep"
-      id={journey.id}
+      id="about"
     >
       <div
         aria-hidden="true"
@@ -76,7 +76,7 @@ function Journey({ content }) {
           </motion.p>
         </div>
 
-        <div className="relative mt-16 grid gap-14 pl-8 sm:pl-10 lg:mt-24 lg:gap-24 lg:pl-0">
+        <div className="relative mt-16 grid max-w-full gap-14 pl-8 sm:pl-10 lg:mt-24 lg:gap-24 lg:pl-0">
           <motion.span
             aria-hidden="true"
             className="absolute bottom-10 left-3 top-0 w-px origin-top bg-gradient-to-b from-lyken-gold/0 via-lyken-gold/45 to-lyken-gold/0 sm:left-4 lg:left-1/2"
@@ -94,7 +94,7 @@ function Journey({ content }) {
 
             return (
               <article
-                className="relative grid items-center gap-8 lg:grid-cols-12 lg:gap-12"
+                className="relative grid max-w-full items-center gap-8 lg:grid-cols-12 lg:gap-12"
                 id={stage.id}
                 key={stage.id}
               >
@@ -132,11 +132,11 @@ function Journey({ content }) {
                   </p>
                   <ul
                     aria-label={stage.label}
-                    className="mt-8 flex flex-wrap gap-3"
+                    className="mt-8 flex max-w-full flex-wrap gap-3"
                   >
                     {stage.keywords.slice(0, 3).map((keyword) => (
                       <li
-                        className="border border-lyken-gold-line-20 bg-lyken-emerald/35 px-4 py-2 text-xs font-medium uppercase tracking-[0.16em] text-lyken-text-muted"
+                        className="max-w-full border border-lyken-gold-line-20 bg-lyken-emerald/35 px-3 py-2 text-[0.68rem] font-medium uppercase leading-snug tracking-[0.12em] text-lyken-text-muted sm:px-4 sm:text-xs sm:tracking-[0.16em]"
                         key={keyword}
                       >
                         {keyword}
@@ -475,7 +475,7 @@ function GrowthVisual({ canUseAmbientMotion, continueCta, shouldReduceMotion, st
         </div>
 
         <motion.a
-          className="lyken-text-button mt-8 inline-flex w-fit items-center gap-3 border-b border-lyken-gold-line-45 pb-2 text-lyken-gold transition hover:border-lyken-gold hover:text-lyken-text"
+          className="lyken-text-button mt-8 inline-flex min-h-11 w-fit max-w-full items-center gap-3 border-b border-lyken-gold-line-45 py-2 text-lyken-gold transition hover:border-lyken-gold hover:text-lyken-text"
           href={continueCta.href}
           initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
           transition={{ delay: shouldReduceMotion ? 0 : 0.52, duration: 0.62, ease: "easeOut" }}

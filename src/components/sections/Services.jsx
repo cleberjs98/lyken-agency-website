@@ -57,14 +57,14 @@ function Services({ content }) {
         </MotionReveal>
       </div>
 
-      <MotionStagger className="relative z-10 mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <MotionStagger className="relative z-10 mt-12 grid max-w-full gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
         {services.items.map((service) => {
           const Icon = serviceIcons[service.icon]
 
           return (
             <MotionStaggerItem key={service.id}>
               <Card
-                className="lyken-service-card flex min-h-[260px] flex-col"
+                className="lyken-service-card flex min-h-[230px] flex-col sm:min-h-[250px] lg:min-h-[260px]"
                 icon={
                   Icon ? (
                     <IconWrapper className="lyken-service-card-icon transition-transform duration-200 ease-out">

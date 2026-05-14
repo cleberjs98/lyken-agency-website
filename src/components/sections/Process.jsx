@@ -29,19 +29,31 @@ function Process({ content }) {
         </MotionReveal>
       </div>
 
-      <MotionStagger className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {process.steps.map((step) => (
-          <MotionStaggerItem key={step.id}>
-            <Card className="p-6" variant="deep">
-              <p className="lyken-text-button text-lyken-gold">
-                {String(step.order).padStart(2, "0")}
-              </p>
-              <h3 className="lyken-text-card-title mt-4 text-lyken-text">{step.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-lyken-text-muted">{step.description}</p>
-            </Card>
-          </MotionStaggerItem>
-        ))}
-      </MotionStagger>
+      <div className="relative mt-12">
+        <span
+          aria-hidden="true"
+          className="absolute bottom-3 left-3 top-3 w-px bg-gradient-to-b from-lyken-gold/0 via-lyken-gold-line-45 to-lyken-gold/0 md:hidden"
+        />
+        <MotionStagger className="grid max-w-full gap-5 pl-9 md:grid-cols-2 md:pl-0 lg:grid-cols-3">
+          {process.steps.map((step) => (
+            <MotionStaggerItem className="relative min-w-0" key={step.id}>
+              <span
+                aria-hidden="true"
+                className="absolute -left-8 top-7 h-3 w-3 border border-lyken-gold-line-45 bg-lyken-gold shadow-[0_0_18px_rgb(212_180_122_/_0.22)] md:hidden"
+              />
+              <Card className="min-h-[190px] p-5 sm:p-6 lg:min-h-[210px]" variant="deep">
+                <p className="lyken-text-button text-lyken-gold">
+                  {String(step.order).padStart(2, "0")}
+                </p>
+                <h3 className="lyken-text-card-title mt-4 text-lyken-text">{step.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-lyken-text-muted">
+                  {step.description}
+                </p>
+              </Card>
+            </MotionStaggerItem>
+          ))}
+        </MotionStagger>
+      </div>
     </Container>
   )
 }

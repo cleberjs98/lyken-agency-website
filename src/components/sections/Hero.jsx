@@ -115,13 +115,39 @@ function supportsFinePointer() {
   return window.matchMedia("(hover: hover) and (pointer: fine)").matches
 }
 
+function useCompactViewport() {
+  const [isCompactViewport, setIsCompactViewport] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined
+    }
+
+    const mediaQuery = window.matchMedia("(max-width: 767px)")
+    const updateViewport = () => {
+      setIsCompactViewport(mediaQuery.matches)
+    }
+
+    updateViewport()
+    mediaQuery.addEventListener("change", updateViewport)
+
+    return () => {
+      mediaQuery.removeEventListener("change", updateViewport)
+    }
+  }, [])
+
+  return isCompactViewport
+}
+
 function Hero({ content }) {
   const hero = content.hero
   const shouldReduceMotion = useReducedMotion()
   const [hasMouseInteraction, setHasMouseInteraction] = useState(supportsFinePointer)
+  const isCompactViewport = useCompactViewport()
   const pointerX = useMotionValue(0)
   const pointerY = useMotionValue(0)
   const canUseMouseInteraction = hasMouseInteraction && !shouldReduceMotion
+  const canUseAmbientMotion = !shouldReduceMotion && !isCompactViewport
 
   const glowX = useSpring(useTransform(pointerX, [-0.5, 0.5], [-36, 36]), {
     damping: 34,
@@ -178,6 +204,7 @@ function Hero({ content }) {
 
   return (
     <section
+      aria-labelledby="hero-title"
       className="relative isolate min-h-[calc(100vh-5rem)] min-h-[calc(100svh-5rem)] overflow-hidden bg-[#0B1F1A] text-lyken-text"
       id="hero"
       onPointerLeave={canUseMouseInteraction ? resetPointer : undefined}
@@ -208,7 +235,7 @@ function Hero({ content }) {
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-[42%] h-[min(72vw,520px)] w-[min(72vw,520px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgb(212_180_122_/_0.16),rgb(184_146_79_/_0.07)_34%,transparent_70%)] blur-3xl"
         animate={
-          shouldReduceMotion
+          !canUseAmbientMotion
             ? { opacity: 0.2 }
             : { opacity: [0.18, 0.34, 0.22], scale: [1, 1.08, 1] }
         }
@@ -221,7 +248,7 @@ function Hero({ content }) {
 
       <motion.svg
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-[1] h-full w-full opacity-70 [mask-image:linear-gradient(90deg,transparent_0%,transparent_26%,rgb(0_0_0_/_0.18)_44%,black_66%,black_100%)] sm:opacity-80"
+        className="pointer-events-none absolute inset-0 z-[1] h-full w-full max-w-full opacity-30 [mask-image:linear-gradient(90deg,transparent_0%,transparent_44%,rgb(0_0_0_/_0.13)_66%,black_90%,black_100%)] sm:opacity-65 md:opacity-80 md:[mask-image:linear-gradient(90deg,transparent_0%,transparent_26%,rgb(0_0_0_/_0.18)_44%,black_66%,black_100%)]"
         fill="none"
         preserveAspectRatio="xMidYMid slice"
         viewBox="0 0 1024 640"
@@ -259,7 +286,7 @@ function Hero({ content }) {
               pathLength: shouldReduceMotion ? 1 : 0,
             }}
             animate={
-              shouldReduceMotion
+              !canUseAmbientMotion
                 ? { opacity: 0.13, pathLength: 1 }
                 : {
                     opacity: [0, 0.12, 0.24, 0.2, 0],
@@ -267,10 +294,10 @@ function Hero({ content }) {
                   }
             }
             transition={{
-              delay: shouldReduceMotion ? 0 : connection.delay % 5.2,
-              duration: shouldReduceMotion ? 0.01 : 8.4 + (index % 4) * 0.85,
+              delay: canUseAmbientMotion ? connection.delay % 5.2 : 0,
+              duration: canUseAmbientMotion ? 8.4 + (index % 4) * 0.85 : 0.01,
               ease: "easeInOut",
-              repeat: shouldReduceMotion ? 0 : Infinity,
+              repeat: canUseAmbientMotion ? Infinity : 0,
               repeatDelay: 1.2 + (index % 6) * 0.55,
               times: [0, 0.18, 0.46, 0.74, 1],
             }}
@@ -293,7 +320,7 @@ function Hero({ content }) {
                 pathLength: shouldReduceMotion ? 1 : 0,
               }}
               animate={
-                shouldReduceMotion
+                !canUseAmbientMotion
                   ? { opacity: 0, pathLength: 1 }
                   : {
                       opacity: [0, 0.24, 0.16, 0],
@@ -301,10 +328,10 @@ function Hero({ content }) {
                     }
               }
               transition={{
-                delay: shouldReduceMotion ? 0 : (connection.delay % 5.2) + 0.65,
-                duration: shouldReduceMotion ? 0.01 : 5.8 + (index % 3) * 0.8,
+                delay: canUseAmbientMotion ? (connection.delay % 5.2) + 0.65 : 0,
+                duration: canUseAmbientMotion ? 5.8 + (index % 3) * 0.8 : 0.01,
                 ease: "easeInOut",
-                repeat: shouldReduceMotion ? 0 : Infinity,
+                repeat: canUseAmbientMotion ? Infinity : 0,
                 repeatDelay: 4.6 + (index % 5) * 0.7,
                 times: [0, 0.44, 0.7, 1],
               }}
@@ -321,7 +348,7 @@ function Hero({ content }) {
             r={node.r}
             initial={{ opacity: shouldReduceMotion ? 0.18 : 0, scale: 0.7 }}
             animate={
-              shouldReduceMotion
+              !canUseAmbientMotion
                 ? { opacity: 0.18, scale: 1 }
                 : {
                     opacity: [0, 0.28, 0.44, 0.24, 0],
@@ -329,10 +356,10 @@ function Hero({ content }) {
                   }
             }
             transition={{
-              delay: shouldReduceMotion ? 0 : node.delay % 5.2,
-              duration: shouldReduceMotion ? 0.01 : 8.8 + (index % 4) * 0.75,
+              delay: canUseAmbientMotion ? node.delay % 5.2 : 0,
+              duration: canUseAmbientMotion ? 8.8 + (index % 4) * 0.75 : 0.01,
               ease: "easeInOut",
-              repeat: shouldReduceMotion ? 0 : Infinity,
+              repeat: canUseAmbientMotion ? Infinity : 0,
               repeatDelay: 1.4 + (index % 5) * 0.6,
               times: [0, 0.18, 0.42, 0.72, 1],
             }}
@@ -349,7 +376,7 @@ function Hero({ content }) {
             r={particle.r}
             initial={{ opacity: shouldReduceMotion ? 0.14 : 0, scale: 0.7 }}
             animate={
-              shouldReduceMotion
+              !canUseAmbientMotion
                 ? { opacity: 0.12, scale: 1 }
                 : {
                     opacity: [0, 0.34, 0.14, 0],
@@ -358,10 +385,10 @@ function Hero({ content }) {
                   }
             }
             transition={{
-              delay: shouldReduceMotion ? 0 : particle.delay,
-              duration: shouldReduceMotion ? 0.01 : 7.6,
+              delay: canUseAmbientMotion ? particle.delay : 0,
+              duration: canUseAmbientMotion ? 7.6 : 0.01,
               ease: "easeInOut",
-              repeat: shouldReduceMotion ? 0 : Infinity,
+              repeat: canUseAmbientMotion ? Infinity : 0,
               repeatDelay: 2.4,
             }}
           />
@@ -373,32 +400,35 @@ function Hero({ content }) {
         className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(90deg,rgb(11_31_26_/_0.72),rgb(11_31_26_/_0.48)_34%,transparent_64%)]"
       />
 
-      <Container className="relative z-10 flex min-h-[calc(100vh-5rem)] min-h-[calc(100svh-5rem)] flex-col justify-center py-16 pb-10 pt-20 sm:py-20 md:py-24 lg:py-28">
+      <Container className="relative z-10 flex min-h-[calc(100vh-5rem)] min-h-[calc(100svh-5rem)] flex-col justify-center py-12 pb-9 pt-16 sm:py-20 md:py-24 lg:py-28">
         <div className="lyken-editorial-grid items-center lg:min-h-[58vh]">
           <motion.div
             animate={{ opacity: 1, y: 0 }}
-            className="md:col-span-6 lg:col-span-8 xl:col-span-7"
+            className="min-w-0 md:col-span-6 lg:col-span-8 xl:col-span-7"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
             transition={revealTransition}
           >
             <SectionLabel>{hero.concept}</SectionLabel>
-            <h1 className="mt-5 max-w-5xl font-display text-[clamp(3.1rem,12vw,5rem)] font-medium leading-[0.98] tracking-normal text-lyken-text drop-shadow-[0_8px_32px_rgb(0_0_0_/_0.24)] sm:text-[clamp(4.4rem,10vw,6.2rem)] lg:text-[clamp(5.4rem,8.4vw,7.35rem)] xl:max-w-[62rem]">
+            <h1
+              className="mt-5 max-w-full text-wrap font-display text-[clamp(2.25rem,10.5vw,4.35rem)] font-medium leading-[1.04] tracking-normal text-lyken-text drop-shadow-[0_8px_32px_rgb(0_0_0_/_0.24)] [overflow-wrap:break-word] sm:max-w-5xl sm:text-[clamp(4rem,10vw,6.2rem)] sm:leading-[0.98] lg:text-[clamp(5.4rem,8.4vw,7.35rem)] xl:max-w-[62rem]"
+              id="hero-title"
+            >
               {hero.headline}
             </h1>
           </motion.div>
 
           <motion.div
             animate={{ opacity: 1, y: 0 }}
-            className="md:col-span-5 lg:col-span-4 lg:col-start-9 lg:pt-32 xl:col-start-8 xl:col-span-5"
+            className="min-w-0 md:col-span-5 lg:col-span-4 lg:col-start-9 lg:pt-32 xl:col-start-8 xl:col-span-5"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
             transition={{ ...revealTransition, delay: shouldReduceMotion ? 0 : 0.16 }}
           >
-            <p className="max-w-[35rem] font-sans text-[clamp(1rem,1.35vw,1.14rem)] leading-8 text-lyken-text-muted drop-shadow-[0_6px_24px_rgb(0_0_0_/_0.22)]">
+            <p className="max-w-[35rem] font-sans text-base leading-7 text-lyken-text-muted drop-shadow-[0_6px_24px_rgb(0_0_0_/_0.22)] sm:text-[clamp(1rem,1.35vw,1.14rem)] sm:leading-8">
               {hero.subheadline}
             </p>
             <motion.div
               animate={{ opacity: 1, y: 0 }}
-              className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row"
+              className="mt-7 flex max-w-full flex-col gap-3 sm:mt-8 sm:flex-row lg:flex-col xl:flex-row"
               initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
               transition={{ ...revealTransition, delay: shouldReduceMotion ? 0 : 0.3 }}
             >

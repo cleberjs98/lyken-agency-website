@@ -10,6 +10,14 @@ import MotionReveal from "../motion/MotionReveal"
 
 const monogramSrc = "/logos/lyken-monogram.svg"
 const submitDelay = 650
+const autoCompleteByFieldName = {
+  businessName: "organization",
+  email: "email",
+  message: "off",
+  name: "name",
+  phone: "tel",
+  serviceNeeded: "off",
+}
 
 function createInitialValues(fields) {
   return fields.reduce((values, field) => ({ ...values, [field.name]: "" }), {})
@@ -41,16 +49,24 @@ function validateContactForm(values, validationMessages) {
   return errors
 }
 
-function ContactField({ disabled, error, field, onChange, serviceOptions, value }) {
+function ContactField({
+  disabled,
+  error,
+  field,
+  onChange,
+  serviceOptions,
+  value,
+  wrapperClassName = "",
+}) {
   const errorId = `${field.id}-error`
   const baseClassName =
-    "mt-2 min-h-12 w-full border bg-lyken-deep/70 px-4 py-3 text-base text-lyken-text placeholder:text-lyken-text-soft transition-colors duration-200 focus:border-lyken-gold focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-lyken-gold disabled:cursor-not-allowed disabled:border-lyken-gold-line-20 disabled:text-lyken-text-soft disabled:opacity-65"
+    "mt-2 min-h-12 w-full min-w-0 appearance-none border bg-lyken-deep/70 px-4 py-3 text-base leading-6 text-lyken-text placeholder:text-lyken-text-soft transition-colors duration-200 focus:border-lyken-gold focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-lyken-gold disabled:cursor-not-allowed disabled:border-lyken-gold-line-20 disabled:text-lyken-text-soft disabled:opacity-65"
   const stateClassName = error ? "border-lyken-gold-warm" : "border-lyken-gold-line-30"
-  const className = `${baseClassName} ${stateClassName}`
+  const inputClassName = `${baseClassName} ${stateClassName}`
   const fieldProps = {
     "aria-describedby": error ? errorId : undefined,
     "aria-invalid": error ? "true" : "false",
-    "aria-required": field.required ? "true" : undefined,
+    autoComplete: autoCompleteByFieldName[field.name],
     disabled,
     id: field.id,
     name: field.name,
@@ -60,20 +76,20 @@ function ContactField({ disabled, error, field, onChange, serviceOptions, value 
   }
 
   return (
-    <div className="min-w-0">
+    <div className={`min-w-0 ${wrapperClassName}`}>
       <label className="lyken-text-button block text-lyken-text-muted" htmlFor={field.id}>
         {field.label}
       </label>
       {field.type === "textarea" ? (
         <textarea
-          className={`${className} min-h-32 resize-y`}
+          className={`${inputClassName} min-h-36 resize-y`}
           placeholder={field.placeholder}
           {...fieldProps}
         />
       ) : null}
       {field.type === "select" ? (
         <select
-          className={className}
+          className={inputClassName}
           {...fieldProps}
         >
           <option disabled value="">
@@ -88,14 +104,14 @@ function ContactField({ disabled, error, field, onChange, serviceOptions, value 
       ) : null}
       {field.type !== "textarea" && field.type !== "select" ? (
         <input
-          className={className}
+          className={inputClassName}
           placeholder={field.placeholder}
           type={field.type}
           {...fieldProps}
         />
       ) : null}
       {error ? (
-        <p className="mt-2 text-sm leading-6 text-lyken-gold-warm" id={errorId}>
+        <p className="mt-2 text-sm leading-6 text-lyken-gold-warm" id={errorId} role="alert">
           {error}
         </p>
       ) : null}
@@ -153,43 +169,53 @@ function Contact({ content }) {
 
   return (
     <Container
+      aria-labelledby={`${contact.id}-title`}
       as="section"
       className="lyken-section-space relative isolate overflow-hidden border-t border-lyken-gold-line-20"
       id={contact.id}
     >
       <AnimatedLine className="absolute left-5 right-5 top-0 md:left-8 md:right-8 lg:left-12 lg:right-12" />
-      <DigitalMesh className="hidden md:block" intensity="strong" />
+      <DigitalMesh className="hidden lg:block" intensity="strong" />
 
       <div className="lyken-editorial-grid relative z-10 items-start">
         <MotionReveal className="min-w-0 md:col-span-6 lg:col-span-5 lg:row-start-1">
           <SectionLabel>{contact.sectionLabel}</SectionLabel>
-          <SectionTitle className="mt-4">{contact.finalCta.title}</SectionTitle>
+          <SectionTitle className="mt-4" id={`${contact.id}-title`}>
+            {contact.finalCta.title}
+          </SectionTitle>
           <p className="lyken-text-body mt-5 text-lyken-text-muted">{contact.finalCta.text}</p>
         </MotionReveal>
 
         <MotionReveal
           as="form"
-          className="grid min-w-0 gap-5 border border-lyken-gold-line-20 bg-lyken-emerald/60 p-5 shadow-[0_24px_80px_rgb(0_0_0/0.18)] md:col-span-6 lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1 lg:p-8"
+          className="grid min-w-0 gap-5 border border-lyken-gold-line-20 bg-lyken-emerald/60 p-5 shadow-[0_24px_80px_rgb(0_0_0/0.18)] md:col-span-6 md:grid-cols-2 md:p-6 lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1 lg:p-8"
           delay={0.1}
           id={contact.form.id}
           noValidate
           onSubmit={handleSubmit}
         >
-          {contact.form.fields.map((field) => (
-            <ContactField
-              disabled={isLoading}
-              error={errors[field.name]}
-              field={field}
-              key={field.id}
-              onChange={handleChange}
-              serviceOptions={contact.form.serviceOptions}
-              value={values[field.name]}
-            />
-          ))}
+          {contact.form.fields.map((field) => {
+            const isFullWidthField = field.type === "select" || field.type === "textarea"
 
-          <p className="text-sm leading-6 text-lyken-text-soft">{contact.form.privacyNote}</p>
+            return (
+              <ContactField
+                disabled={isLoading}
+                error={errors[field.name]}
+                field={field}
+                key={field.id}
+                onChange={handleChange}
+                serviceOptions={contact.form.serviceOptions}
+                value={values[field.name]}
+                wrapperClassName={isFullWidthField ? "md:col-span-2" : ""}
+              />
+            )
+          })}
 
-          <div aria-live="polite" className="min-h-12">
+          <p className="text-sm leading-6 text-lyken-text-soft md:col-span-2">
+            {contact.form.privacyNote}
+          </p>
+
+          <div aria-live="polite" className="min-h-12 md:col-span-2" role="status">
             {isSuccess ? (
               <p className="border border-lyken-gold-line-30 bg-lyken-deep/45 px-4 py-3 text-sm leading-6 text-lyken-text">
                 {contact.form.successMessage}
@@ -202,7 +228,11 @@ function Contact({ content }) {
             ) : null}
           </div>
 
-          <Button className="mt-1 min-h-12 w-full sm:w-auto" disabled={isLoading} type="submit">
+          <Button
+            className="mt-1 min-h-12 w-full md:col-span-2 md:w-fit"
+            disabled={isLoading}
+            type="submit"
+          >
             {isLoading ? contact.form.loadingLabel : contact.form.submitLabel}
           </Button>
         </MotionReveal>
@@ -233,7 +263,9 @@ function Contact({ content }) {
                   key={item.id}
                 >
                   <span className="lyken-text-button text-lyken-text-soft">{item.label}</span>
-                  <span className="text-sm text-lyken-text-muted sm:text-right">{item.value}</span>
+                  <span className="max-w-full break-words text-sm text-lyken-text-muted sm:text-right">
+                    {item.value}
+                  </span>
                 </div>
               ))}
             </div>
