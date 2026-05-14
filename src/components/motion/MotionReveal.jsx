@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion"
-import { createElement } from "react"
+import { createElement, useEffect, useState } from "react"
 
 import {
   motionDurations,
@@ -25,6 +25,30 @@ function getMotionElement(as) {
   return motionElements[as] ?? motion.div
 }
 
+function useCompactMotion() {
+  const [isCompactMotion, setIsCompactMotion] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined
+    }
+
+    const mediaQuery = window.matchMedia("(max-width: 767px)")
+    const updateMotionMode = () => {
+      setIsCompactMotion(mediaQuery.matches)
+    }
+
+    updateMotionMode()
+    mediaQuery.addEventListener("change", updateMotionMode)
+
+    return () => {
+      mediaQuery.removeEventListener("change", updateMotionMode)
+    }
+  }, [])
+
+  return isCompactMotion
+}
+
 function MotionReveal({
   amount = 0.22,
   as = "div",
@@ -38,13 +62,17 @@ function MotionReveal({
   ...props
 }) {
   const shouldReduceMotion = useReducedMotion()
+  const isCompactMotion = useCompactMotion()
   const MotionComponent = getMotionElement(as)
+  const motionCustom = isCompactMotion
+    ? { delay: Math.min(delay, 0.04), duration: Math.min(duration, 0.42), y: 0 }
+    : { delay, duration, y }
 
   return createElement(
     MotionComponent,
     {
       className,
-      custom: shouldReduceMotion ? undefined : { delay, duration, y },
+      custom: shouldReduceMotion ? undefined : motionCustom,
       initial: "hidden",
       variants: shouldReduceMotion ? reducedRevealVariants : revealVariants,
       viewport: { once, amount, margin },
@@ -67,13 +95,17 @@ export function MotionStagger({
   ...props
 }) {
   const shouldReduceMotion = useReducedMotion()
+  const isCompactMotion = useCompactMotion()
   const MotionComponent = getMotionElement(as)
+  const motionCustom = isCompactMotion
+    ? { delay: Math.min(delay, 0.04), stagger: Math.min(stagger, 0.04) }
+    : { delay, stagger }
 
   return createElement(
     MotionComponent,
     {
       className,
-      custom: shouldReduceMotion ? undefined : { delay, stagger },
+      custom: shouldReduceMotion ? undefined : motionCustom,
       initial: "hidden",
       variants: shouldReduceMotion ? reducedRevealVariants : staggerContainerVariants,
       viewport: { once, amount, margin },
@@ -93,13 +125,17 @@ export function MotionStaggerItem({
   ...props
 }) {
   const shouldReduceMotion = useReducedMotion()
+  const isCompactMotion = useCompactMotion()
   const MotionComponent = getMotionElement(as)
+  const motionCustom = isCompactMotion
+    ? { duration: Math.min(duration, 0.42), y: 0 }
+    : { duration, y }
 
   return createElement(
     MotionComponent,
     {
       className,
-      custom: shouldReduceMotion ? undefined : { duration, y },
+      custom: shouldReduceMotion ? undefined : motionCustom,
       variants: shouldReduceMotion ? reducedRevealVariants : staggerItemVariants,
       ...props,
     },

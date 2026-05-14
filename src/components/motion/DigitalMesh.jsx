@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion"
+import { useEffect, useState } from "react"
 
 import { motionDurations, motionEasings } from "../../utils/motionTokens"
 
@@ -21,8 +22,34 @@ const meshNodes = [
   [286, 226],
 ]
 
+function useCompactViewport() {
+  const [isCompactViewport, setIsCompactViewport] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined
+    }
+
+    const mediaQuery = window.matchMedia("(max-width: 767px)")
+    const updateViewport = () => {
+      setIsCompactViewport(mediaQuery.matches)
+    }
+
+    updateViewport()
+    mediaQuery.addEventListener("change", updateViewport)
+
+    return () => {
+      mediaQuery.removeEventListener("change", updateViewport)
+    }
+  }, [])
+
+  return isCompactViewport
+}
+
 function DigitalMesh({ className = "", intensity = "subtle" }) {
   const shouldReduceMotion = useReducedMotion()
+  const isCompactViewport = useCompactViewport()
+  const canUseContinuousMotion = !shouldReduceMotion && !isCompactViewport
   const opacity = intensity === "strong" ? "opacity-35" : "opacity-20"
 
   return (
@@ -41,7 +68,7 @@ function DigitalMesh({ className = "", intensity = "subtle" }) {
         preserveAspectRatio="xMidYMid meet"
         viewBox="0 0 400 360"
         animate={
-          shouldReduceMotion
+          !canUseContinuousMotion
             ? undefined
             : {
                 x: [0, -8, 0],
@@ -52,7 +79,7 @@ function DigitalMesh({ className = "", intensity = "subtle" }) {
         transition={{
           duration: motionDurations.mesh,
           ease: "easeInOut",
-          repeat: shouldReduceMotion ? 0 : Infinity,
+          repeat: canUseContinuousMotion ? Infinity : 0,
         }}
       >
         <defs>
@@ -90,7 +117,7 @@ function DigitalMesh({ className = "", intensity = "subtle" }) {
             key={`${cx}-${cy}`}
             r={index % 3 === 0 ? 2.2 : 1.6}
             animate={
-              shouldReduceMotion
+              !canUseContinuousMotion
                 ? { opacity: 0.28, scale: 1 }
                 : { opacity: [0.22, 0.58, 0.3], scale: [1, 1.18, 1] }
             }
@@ -98,7 +125,7 @@ function DigitalMesh({ className = "", intensity = "subtle" }) {
               delay: index * 0.16,
               duration: 5.8 + index * 0.22,
               ease: "easeInOut",
-              repeat: shouldReduceMotion ? 0 : Infinity,
+              repeat: canUseContinuousMotion ? Infinity : 0,
             }}
           />
         ))}
