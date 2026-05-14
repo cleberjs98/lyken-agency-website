@@ -340,7 +340,7 @@ heavy parallax
 
 ## 17. Launch Strategy
 
-Status: Open
+Status: Partially Approved
 
 Options:
 
@@ -353,6 +353,24 @@ Recommended:
 
 ```txt
 Vercel preview first, then domain after final audit.
+```
+
+Current decision:
+
+```txt
+Initial public Vercel deployment is active without a custom domain.
+```
+
+Current URL:
+
+```txt
+https://lyken-agency-website.vercel.app/
+```
+
+Remaining launch decision:
+
+```txt
+Select and connect the final custom domain after final audit.
 ```
 
 ---
@@ -393,7 +411,8 @@ Needed only if analytics, tracking or cookies are added.
 [ ] Final copy approved
 [ ] Portfolio decision made
 [ ] Packages decision made
-[ ] Launch strategy selected
+[x] Initial Vercel deployment completed
+[ ] Final domain launch strategy selected
 ```
 
 ---

@@ -154,3 +154,63 @@ Next action:
 ```txt
 Run renewed visual audit for Fase 08 before starting Fase 09.
 ```
+
+---
+
+## Deployment Status - Fase 12
+
+Status: Fase 12 technically validated for initial Vercel publication.
+
+Validated scope:
+
+- 12.1 - GitHub repository connected
+- 12.2 - Required project files confirmed
+- 12.3 - Local build validated
+- 12.4 - Vercel publication configured and deployed
+- 12.5 - Vercel deployment/preview flow confirmed through GitHub integration
+- 12.6 - No environment variables required for the current version
+- 12.7 - Custom domain remains pending
+- 12.8 - Post-deploy technical checklist validated
+- 12.9 - Mobile online rendering checked through Chrome headless viewport
+- 12.10 - Desktop online rendering checked through Chrome headless viewport
+- 12.11 - Public assets and cache headers checked
+- 12.12 - No out-of-scope features added
+- 12.13 - Deployment audit completed
+- 12.14 - Technical approval criteria met with manual visual checks still recommended
+
+Production URL:
+
+```txt
+https://lyken-agency-website.vercel.app/
+```
+
+GitHub remote:
+
+```txt
+git@github.com:cleberjs98/lyken-agency-website.git
+```
+
+Latest deployed commit at validation:
+
+```txt
+16ebd02 fix(performance): defer site render during intro animation
+```
+
+Validation evidence:
+
+- `npm run build` passed
+- `npm run lint` passed
+- Vercel URL returned HTTP 200
+- Vite JS/CSS bundles returned HTTP 200
+- favicon, Apple touch icon, OG image and logos returned HTTP 200
+- no tracked `dist`, `node_modules`, `.env` or `.env.local`
+- no runtime `VITE_*` variables or sensitive keys found in checked project runtime files
+
+Pending before final launch:
+
+- real-device mobile review
+- browser console review in an interactive browser session
+- final domain selection and DNS setup
+- official email, WhatsApp and social links
+- final form integration decision
+- perceived performance review for dense loading and Hero motion
