@@ -33,8 +33,13 @@ function setMetaContent(selector, attributes, content) {
 
 function App() {
   const [isIntroActive, setIsIntroActive] = useState(true)
+  const [canRenderSite, setCanRenderSite] = useState(false)
+  const handleIntroRevealStart = useCallback(() => {
+    setCanRenderSite(true)
+  }, [])
   const handleIntroComplete = useCallback(() => {
     setIsIntroActive(false)
+    setCanRenderSite(true)
   }, [])
   const {
     content,
@@ -78,22 +83,25 @@ function App() {
       <LoadingExperience
         language={language}
         onComplete={handleIntroComplete}
+        onRevealStart={handleIntroRevealStart}
         phrase={content.loading.phrase}
       />
-      <Layout
-        content={content}
-        language={language}
-        setLanguage={setLanguage}
-        supportedLanguages={supportedLanguages}
-      >
-        <Hero content={content} isIntroActive={isIntroActive} />
-        <Journey content={content} />
-        <Services content={content} />
-        <Process content={content} />
-        <Solutions content={content} />
-        <WhyLyken content={content} />
-        <Contact content={content} />
-      </Layout>
+      {canRenderSite ? (
+        <Layout
+          content={content}
+          language={language}
+          setLanguage={setLanguage}
+          supportedLanguages={supportedLanguages}
+        >
+          <Hero content={content} isIntroActive={isIntroActive} />
+          <Journey content={content} />
+          <Services content={content} />
+          <Process content={content} />
+          <Solutions content={content} />
+          <WhyLyken content={content} />
+          <Contact content={content} />
+        </Layout>
+      ) : null}
     </>
   )
 }

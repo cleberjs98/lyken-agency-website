@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react"
 
 const loadingDuration = 14400
 const reducedLoadingDuration = 3600
+const revealStartDelay = 12900
 const logoFontFamily = "Playfair Display, serif"
 const backgroundSettle = [0, 0.22, 0.34, 0.58, 0.86, 1]
 
@@ -152,7 +153,7 @@ const electricFilaments = [
   },
 ]
 
-function LoadingExperience({ language = "en", onComplete, phrase }) {
+function LoadingExperience({ language = "en", onComplete, onRevealStart, phrase }) {
   const [isVisible, setIsVisible] = useState(true)
   const shouldReduceMotion = useReducedMotion()
   const stages = loadingStages[language] ?? loadingStages.en
@@ -161,7 +162,13 @@ function LoadingExperience({ language = "en", onComplete, phrase }) {
   )
 
   useEffect(() => {
-    const timeout = window.setTimeout(
+    const revealTimeout = window.setTimeout(
+      () => {
+        onRevealStart?.()
+      },
+      shouldReduceMotion ? 0 : revealStartDelay,
+    )
+    const completeTimeout = window.setTimeout(
       () => {
         setIsVisible(false)
         onComplete?.()
@@ -169,8 +176,11 @@ function LoadingExperience({ language = "en", onComplete, phrase }) {
       shouldReduceMotion ? reducedLoadingDuration : loadingDuration,
     )
 
-    return () => window.clearTimeout(timeout)
-  }, [onComplete, shouldReduceMotion])
+    return () => {
+      window.clearTimeout(revealTimeout)
+      window.clearTimeout(completeTimeout)
+    }
+  }, [onComplete, onRevealStart, shouldReduceMotion])
 
   const transition = useMemo(
     () =>
@@ -198,7 +208,7 @@ function LoadingExperience({ language = "en", onComplete, phrase }) {
                   ],
                 }
           }
-          className="fixed inset-0 z-[100] grid min-h-dvh place-items-center overflow-hidden bg-lyken-deep text-lyken-text"
+          className="fixed inset-0 z-[100] grid min-h-dvh transform-gpu place-items-center overflow-hidden bg-lyken-deep text-lyken-text will-change-opacity [contain:layout_paint_style]"
           exit={{
             opacity: 0,
           }}
@@ -215,7 +225,7 @@ function LoadingExperience({ language = "en", onComplete, phrase }) {
           }}
         >
           <motion.div
-            className="pointer-events-none absolute inset-0 bg-[#0B1F1A]"
+            className="pointer-events-none absolute inset-0 transform-gpu bg-[#0B1F1A] will-change-opacity"
             animate={shouldReduceMotion ? { opacity: 0 } : { opacity: [1, 1, 0.42, 0] }}
             transition={{
               delay: shouldReduceMotion ? 0 : 13.05,
@@ -226,7 +236,7 @@ function LoadingExperience({ language = "en", onComplete, phrase }) {
           />
           <motion.div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_46%_52%,rgb(212_180_122_/_0.24),rgb(184_146_79_/_0.11)_22%,transparent_46%),radial-gradient(ellipse_at_58%_58%,rgb(22_76_63_/_0.34),transparent_54%),radial-gradient(circle_at_30%_32%,rgb(16_54_46_/_0.24),transparent_30rem),radial-gradient(circle_at_center,transparent_0,rgb(4_12_10_/_0.66)_80%)]"
+            className="pointer-events-none absolute inset-0 transform-gpu bg-[radial-gradient(ellipse_at_46%_52%,rgb(212_180_122_/_0.24),rgb(184_146_79_/_0.11)_22%,transparent_46%),radial-gradient(ellipse_at_58%_58%,rgb(22_76_63_/_0.34),transparent_54%),radial-gradient(circle_at_30%_32%,rgb(16_54_46_/_0.24),transparent_30rem),radial-gradient(circle_at_center,transparent_0,rgb(4_12_10_/_0.66)_80%)] will-change-transform"
             animate={
               shouldReduceMotion
                 ? { opacity: 1 }
@@ -241,7 +251,7 @@ function LoadingExperience({ language = "en", onComplete, phrase }) {
 
           <motion.div
             aria-hidden="true"
-            className="absolute left-1/2 top-1/2 h-[min(86vw,720px)] w-[min(102vw,820px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse,rgb(212_180_122_/_0.3),rgb(184_146_79_/_0.12)_28%,rgb(22_76_63_/_0.16)_52%,transparent_74%)] blur-3xl sm:h-[min(98vw,720px)] sm:w-[min(108vw,820px)]"
+            className="absolute left-1/2 top-1/2 h-[min(86vw,720px)] w-[min(102vw,820px)] -translate-x-1/2 -translate-y-1/2 transform-gpu rounded-full bg-[radial-gradient(ellipse,rgb(212_180_122_/_0.3),rgb(184_146_79_/_0.12)_28%,rgb(22_76_63_/_0.16)_52%,transparent_74%)] blur-3xl will-change-transform sm:h-[min(98vw,720px)] sm:w-[min(108vw,820px)]"
             initial={{ opacity: 0, scale: 0.42 }}
             animate={
               shouldReduceMotion
@@ -263,7 +273,7 @@ function LoadingExperience({ language = "en", onComplete, phrase }) {
 
           <motion.div
             aria-hidden="true"
-            className="absolute left-1/2 top-1/2 h-[min(88vw,560px)] w-[min(112vw,840px)] -translate-x-1/2 -translate-y-1/2 sm:h-[min(92vw,680px)] sm:w-[min(122vw,980px)]"
+            className="absolute left-1/2 top-1/2 h-[min(88vw,560px)] w-[min(112vw,840px)] -translate-x-1/2 -translate-y-1/2 transform-gpu will-change-transform sm:h-[min(92vw,680px)] sm:w-[min(122vw,980px)]"
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{
               opacity: shouldReduceMotion ? 0.42 : [0, 0.06, 0.38, 0.72, 0.44, 0.18],
