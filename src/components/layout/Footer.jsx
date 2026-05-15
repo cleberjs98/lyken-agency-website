@@ -36,7 +36,10 @@ function Footer({ content }) {
         alt=""
         aria-hidden="true"
         className="pointer-events-none absolute -bottom-8 right-6 h-32 w-32 opacity-[0.045] md:h-44 md:w-44"
+        height="160"
+        loading="lazy"
         src={monogramSrc}
+        width="160"
       />
       <Container className="relative py-12 lg:py-16">
         <GoldDivider className="mb-10" />
@@ -46,7 +49,10 @@ function Footer({ content }) {
             <img
               alt={footer.logo.alt}
               className="h-10 w-auto opacity-90"
+              height="128"
+              loading="lazy"
               src={footer.logo.src}
+              width="520"
             />
             <p className="lyken-text-card-title mt-6 max-w-sm text-lyken-text">
               {footer.tagline}

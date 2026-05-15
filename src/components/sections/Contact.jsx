@@ -253,7 +253,10 @@ function Contact({ content }) {
                 alt=""
                 aria-hidden="true"
                 className="h-12 w-10 shrink-0 object-contain opacity-10 sm:h-16 sm:w-14"
+                height="160"
+                loading="lazy"
                 src={monogramSrc}
+                width="160"
               />
             </div>
             <div className="mt-6 grid gap-3 border-t border-lyken-gold-line-20 pt-5">

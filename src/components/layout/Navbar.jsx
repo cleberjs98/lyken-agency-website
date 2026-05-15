@@ -104,7 +104,9 @@ function Navbar({ content, language, setLanguage, supportedLanguages }) {
             alt=""
             aria-hidden="true"
             className="h-10 w-auto max-w-[168px] object-contain md:h-11 md:max-w-[190px]"
+            height="128"
             src={logoSrc}
+            width="520"
           />
           <span className="sr-only">{navigation.brandLabel}</span>
         </a>
