@@ -14,6 +14,7 @@ export const pt = {
   },
   navigation: {
     brandLabel: "Lyken Agency",
+    skipLabel: "Ir para o conteúdo principal",
     items: [
       { id: "about", label: "Sobre", target: "about", href: "#about", order: 1 },
       { id: "services", label: "Serviços", target: "services", href: "#services", order: 2 },

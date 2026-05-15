@@ -8,7 +8,7 @@ function Layout({ children, content, language, setLanguage, supportedLanguages }
         className="lyken-text-button sr-only focus:not-sr-only focus:fixed focus:left-5 focus:top-5 focus:z-[120] focus:border focus:border-lyken-gold focus:bg-lyken-deep focus:px-4 focus:py-3 focus:text-lyken-gold focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-lyken-gold"
         href="#main-content"
       >
-        Skip to main content
+        {content.navigation.skipLabel}
       </a>
       <Navbar
         content={content}

@@ -45,6 +45,11 @@ function Journey({ content }) {
       className="relative isolate overflow-hidden border-t border-lyken-gold-line-20 bg-lyken-deep"
       id="about"
     >
+      <span
+        aria-hidden="true"
+        className="absolute -top-24"
+        id={journey.id}
+      />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgb(212_180_122_/_0.08),transparent_24rem),radial-gradient(circle_at_82%_42%,rgb(22_76_63_/_0.24),transparent_34rem),linear-gradient(180deg,rgb(11_31_26_/_0.42),#0B1F1A_72%)]"
