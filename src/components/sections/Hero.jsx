@@ -400,11 +400,11 @@ function Hero({ content, isIntroActive = false }) {
         className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(90deg,rgb(11_31_26_/_0.72),rgb(11_31_26_/_0.48)_34%,transparent_64%)]"
       />
 
-      <Container className="relative z-10 flex min-h-[calc(100vh-5rem)] min-h-[calc(100svh-5rem)] flex-col justify-center py-12 pb-9 pt-16 sm:py-20 md:py-24 lg:py-28">
-        <div className="lyken-editorial-grid items-center lg:min-h-[58vh]">
+      <Container className="relative z-10 flex min-h-[calc(100vh-5rem)] min-h-[calc(100svh-5rem)] max-w-[100vw] flex-col justify-center overflow-hidden py-12 pb-9 pt-16 sm:py-20 md:py-24 lg:max-w-[1280px] lg:py-28">
+        <div className="lyken-editorial-grid max-w-[calc(100vw-2.5rem)] items-center overflow-hidden lg:min-h-[58vh] lg:max-w-none lg:overflow-visible">
           <motion.div
             animate={{ opacity: 1, y: 0 }}
-            className="min-w-0 md:col-span-6 lg:col-span-8 xl:col-span-7"
+            className="min-w-0 max-w-[17rem] sm:max-w-[calc(100vw-2.5rem)] md:col-span-6 md:max-w-none lg:col-span-8 xl:col-span-7"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
             transition={revealTransition}
           >
@@ -419,16 +419,16 @@ function Hero({ content, isIntroActive = false }) {
 
           <motion.div
             animate={{ opacity: 1, y: 0 }}
-            className="min-w-0 md:col-span-5 lg:col-span-4 lg:col-start-9 lg:pt-32 xl:col-start-8 xl:col-span-5"
+            className="min-w-0 max-w-[17rem] sm:max-w-[calc(100vw-2.5rem)] md:col-span-5 md:max-w-none lg:col-span-4 lg:col-start-9 lg:pt-32 xl:col-start-8 xl:col-span-5"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
             transition={{ ...revealTransition, delay: shouldReduceMotion ? 0 : 0.16 }}
           >
-            <p className="max-w-[35rem] font-sans text-base leading-7 text-lyken-text-muted drop-shadow-[0_6px_24px_rgb(0_0_0_/_0.22)] sm:text-[clamp(1rem,1.35vw,1.14rem)] sm:leading-8">
+            <p className="max-w-[17rem] break-words font-sans text-base leading-7 text-lyken-text-muted drop-shadow-[0_6px_24px_rgb(0_0_0_/_0.22)] sm:max-w-[35rem] sm:text-[clamp(1rem,1.35vw,1.14rem)] sm:leading-8">
               {hero.subheadline}
             </p>
             <motion.div
               animate={{ opacity: 1, y: 0 }}
-              className="mt-7 flex max-w-full flex-col gap-3 sm:mt-8 sm:flex-row lg:flex-col xl:flex-row"
+              className="mt-7 flex max-w-[17rem] flex-col gap-3 sm:mt-8 sm:max-w-full sm:flex-row lg:flex-col xl:flex-row"
               initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
               transition={{ ...revealTransition, delay: shouldReduceMotion ? 0 : 0.3 }}
             >
@@ -454,9 +454,11 @@ function Hero({ content, isIntroActive = false }) {
           initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
           transition={{ ...revealTransition, delay: shouldReduceMotion ? 0 : 0.48 }}
         >
-          <p className="lyken-text-button text-lyken-gold">{hero.tagline}</p>
+          <p className="lyken-text-button max-w-[17rem] break-words leading-5 text-lyken-gold sm:max-w-[calc(100vw-2.5rem)] md:max-w-full">
+            {hero.tagline}
+          </p>
           <div className="flex flex-col gap-4 md:items-end">
-            <p className="max-w-xl text-xs leading-6 text-lyken-text-soft/60 md:text-right">
+            <p className="max-w-[17rem] break-words text-xs leading-6 text-lyken-text-soft/60 sm:max-w-[calc(100vw-2.5rem)] md:max-w-xl md:text-right">
               {hero.narrative}
             </p>
             <motion.div
