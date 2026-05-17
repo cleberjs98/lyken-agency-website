@@ -84,19 +84,19 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
         Math.sin(u * 7.4 - currentB + layer * 1.2 + rowPhase * 0.44) * 0.74 +
         Math.sin(u * 13.8 + currentA + rowPhase * 0.92) * 0.34 +
         Math.sin(u * 4.2 + v * 8.8 - currentC) * 0.22
-      const twist = (twistWave + roll * 0.9) * Math.sin(v * Math.PI) * (0.62 + focal * 1.55)
+      const twist = (twistWave + roll * 0.62) * Math.sin(v * Math.PI) * (0.44 + focal * 0.95)
       const tension = clamp(Math.abs(twist) * 0.78 + focal * 0.72, 0, 1)
       const foldLine = 0.66 - u * 0.42 + Math.sin(u * 5.2 - time * 0.32) * 0.035
       const foldDistance = Math.abs(v - foldLine)
-      const fold = smoothPulse(foldDistance, 0.085) * (0.56 + focal * 1.34)
-      const twistAngle = roll * (1.02 + focal * 1.36) + fold * 1.42
+      const fold = smoothPulse(foldDistance, 0.095) * (0.38 + focal * 0.9)
+      const twistAngle = roll * (0.76 + focal * 0.9) + fold * 0.88
       const slowCurrent =
         Math.sin(time * 0.2 + layer * 1.7 + rowPhase * 0.85) * width * 0.016 +
         Math.sin(time * 0.13 + u * 3.4 + v * 2.8) * width * 0.012
       const sideDrift =
         Math.sin(u * 5.8 + v * 4.6 + time * 0.2 + layer) * width * 0.012 * depth +
-        twist * width * (compact ? 0.064 : 0.096) +
-        rowPhase * Math.sin(twistAngle) * width * (compact ? 0.046 : 0.07)
+        twist * width * (compact ? 0.038 : 0.058) +
+        rowPhase * Math.sin(twistAngle) * width * (compact ? 0.026 : 0.04)
 
       const x = originX + u * spanX + slowCurrent + sideDrift
       const diagonalLift = u * (compact ? height * 0.1 : height * 0.18)
@@ -106,7 +106,7 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
       const transverse =
         rowPhase *
         height *
-        (compact ? 0.18 : 0.29) *
+        (compact ? 0.17 : 0.27) *
         (0.74 + u * 0.36) *
         clamp(apparentWidth, 0.32, 1.18) *
         (1 - focal * 0.2 + Math.abs(twist) * 0.28)
@@ -121,8 +121,8 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
       const irregularCrest =
         Math.sin(u * 3.2 + v * 7.1 + time * 0.11) * focal * height * 0.036
       const foldShadow =
-        twist * rowPhase * height * (compact ? 0.075 : 0.112) +
-        Math.sin(twistAngle) * rowPhase * height * (compact ? 0.07 : 0.105)
+        twist * rowPhase * height * (compact ? 0.045 : 0.068) +
+        Math.sin(twistAngle) * rowPhase * height * (compact ? 0.038 : 0.058)
 
       const y =
         baseY +
@@ -197,14 +197,21 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
         context.stroke()
       }
 
-      for (let column = 0; column < columns; column += width < 768 ? 3 : 3) {
+      for (let column = 0; column < columns; column += width < 768 ? 4 : 4) {
         context.beginPath()
+        let hasStarted = false
 
         for (let row = 0; row < rows; row += 1) {
           const point = points[row][column]
+          const previous = row > 0 ? points[row - 1][column] : null
 
-          if (row === 0) {
+          if (!previous || Math.abs(point.x - previous.x) > width * 0.08 || Math.abs(point.y - previous.y) > height * 0.16) {
+            if (hasStarted) {
+              context.stroke()
+              context.beginPath()
+            }
             context.moveTo(point.x, point.y)
+            hasStarted = true
             continue
           }
 
@@ -217,7 +224,9 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
           (0.032 + u * 0.078 + focal * 0.13) * alphaScale
         })`
         context.lineWidth = 0.2 + focal * 0.08
-        context.stroke()
+        if (hasStarted) {
+          context.stroke()
+        }
       }
 
       context.restore()
@@ -226,23 +235,13 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
     const drawFoldEnergyPath = (time, points) => {
       const rows = points.length
       const columns = points[0].length
-      const foldPoints = []
-
-      for (let column = Math.floor(columns * 0.12); column < Math.floor(columns * 0.96); column += 1) {
-        const u = column / (columns - 1)
-        const foldRow = clamp(
-          Math.round((0.66 - u * 0.42 + Math.sin(u * 5.2 - time * 0.32) * 0.035) * (rows - 1)),
-          1,
-          rows - 2,
-        )
-        foldPoints.push(points[foldRow][column])
-      }
+      const foldPoints = points[Math.floor(rows * 0.48)]
 
       context.save()
       context.globalCompositeOperation = "screen"
       context.lineCap = "round"
       context.lineJoin = "round"
-      drawCurvedPath(context, foldPoints)
+      drawCurvedPath(context, foldPoints, Math.floor(columns * 0.18), Math.floor(columns * 0.94))
 
       const base = context.createLinearGradient(width * 0.14, 0, width, 0)
       base.addColorStop(0, `rgba(${gold.bronze}, 0)`)
@@ -254,9 +253,9 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
       context.lineWidth = 0.78
       context.stroke()
 
-      const travel = 0.26 + ((time * 0.045) % 1) * 0.62
-      for (let index = 0; index < foldPoints.length - 1; index += 1) {
-        const u = index / (foldPoints.length - 1)
+      const travel = 0.32 + ((time * 0.038) % 1) * 0.54
+      for (let index = Math.floor(columns * 0.18); index < Math.floor(columns * 0.94); index += 1) {
+        const u = index / (columns - 1)
         const point = foldPoints[index]
         const nextPoint = foldPoints[index + 1]
         const flow = smoothPulse(u - travel, 0.095)
@@ -275,7 +274,7 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
           0,
           0.72,
         )})`
-        context.lineWidth = 0.38 + intensity * 0.62
+        context.lineWidth = 0.32 + intensity * 0.5
         context.stroke()
       }
       context.restore()
