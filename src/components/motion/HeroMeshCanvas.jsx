@@ -55,8 +55,10 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
 
     const resize = () => {
       const bounds = canvas.getBoundingClientRect()
-      const maxDpr = window.innerWidth >= 1024 ? 1.75 : 1.35
-      dpr = clamp(window.devicePixelRatio || 1, 1, maxDpr)
+      const viewportWidth = window.innerWidth
+      const maxDpr = viewportWidth >= 1024 ? 1.75 : 1.6
+      const minDpr = viewportWidth < 768 ? 1.45 : 1
+      dpr = clamp(window.devicePixelRatio || 1, minDpr, maxDpr)
       width = Math.max(1, Math.floor(bounds.width))
       height = Math.max(1, Math.floor(bounds.height))
       canvas.width = Math.floor(width * dpr)
@@ -65,8 +67,8 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
     }
 
     const getMeshSize = () => ({
-      rows: width < 768 ? 20 : 34,
-      columns: width < 768 ? 62 : 110,
+      rows: width < 768 ? 16 : 34,
+      columns: width < 768 ? 50 : 110,
     })
 
     const wavePoint = (u, v, time, layer = 0) => {
@@ -367,8 +369,9 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
       context.clearRect(0, 0, width, height)
       drawBackground()
 
-      const backgroundPoints = createPoints(elapsed * 0.14 - 0.7, 1)
-      const foregroundPoints = createPoints(elapsed * 0.22, 0)
+      const speedScale = width < 768 ? 1.65 : 1
+      const backgroundPoints = createPoints(elapsed * 0.14 * speedScale - 0.7, 1)
+      const foregroundPoints = createPoints(elapsed * 0.22 * speedScale, 0)
 
       drawMeshLayer(backgroundPoints, 0.42)
 
