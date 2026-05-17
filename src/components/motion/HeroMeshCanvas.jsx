@@ -45,14 +45,18 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
 
     const context = canvas.getContext("2d", { alpha: true })
     let animationFrame = 0
+    let lastFrameAt = 0
+    let isVisible = true
     let width = 0
     let height = 0
     let dpr = 1
     let startedAt = performance.now()
+    const frameInterval = 1000 / 30
 
     const resize = () => {
       const bounds = canvas.getBoundingClientRect()
-      dpr = clamp(window.devicePixelRatio || 1, 1, 1.25)
+      const maxDpr = window.innerWidth >= 1024 ? 1.75 : 1.35
+      dpr = clamp(window.devicePixelRatio || 1, 1, maxDpr)
       width = Math.max(1, Math.floor(bounds.width))
       height = Math.max(1, Math.floor(bounds.height))
       canvas.width = Math.floor(width * dpr)
@@ -341,49 +345,6 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
       context.restore()
     }
 
-    const drawParticles = (time, points) => {
-      const rows = points.length
-      const columns = points[0].length
-      const count = width < 768 ? 52 : 120
-
-      context.save()
-      context.globalCompositeOperation = "screen"
-
-      for (let index = 0; index < count; index += 1) {
-        const seed = index * 17.371
-        const clustered = index < count * 0.62
-        const u = clustered
-          ? clamp(0.72 + Math.sin(seed) * 0.12 + Math.sin(seed * 0.33) * 0.04, 0.42, 0.98)
-          : clamp(0.2 + Math.pow((Math.sin(seed) + 1) / 2, 0.62) * 0.78, 0.08, 0.98)
-        const foldV = 0.66 - u * 0.42 + Math.sin(u * 5.2 - time * 0.32) * 0.035
-        const v = clustered
-          ? clamp(foldV + Math.sin(seed * 1.29) * 0.09, 0.04, 0.96)
-          : clamp(0.5 + Math.sin(seed * 1.29) * 0.31, 0.04, 0.96)
-        const row = clamp(Math.round(v * (rows - 1)), 0, rows - 1)
-        const column = clamp(Math.round(u * (columns - 1)), 0, columns - 1)
-        const point = points[row][column]
-        const carried = Math.sin(time * 0.22 + seed) * 5
-        const lift = clustered ? Math.sin(seed * 0.61 + time * 0.16) * 7 : Math.sin(seed) * 4
-        const flow = smoothPulse(u - ((time * 0.075 + 0.58) % 1), 0.12)
-        const focal = smoothPulse(u - 0.78, 0.16)
-        const pulse = 0.72 + Math.sin(time * 0.65 + seed) * 0.28
-        const electric = (point.tension + point.fold) * (0.24 + flow * 0.46 + focal * 0.5)
-        const size = 0.28 + (clustered ? 0.74 : 0.42) * point.energy * pulse
-        const opacity = (0.06 + point.energy * 0.22 + electric * 0.26) * pulse
-
-        context.beginPath()
-        context.fillStyle = `rgba(${index % 11 === 0 ? gold.pale : gold.champagne}, ${clamp(
-          opacity,
-          0,
-          0.64,
-        )})`
-        context.arc(point.x + carried, point.y + lift, size, 0, Math.PI * 2)
-        context.fill()
-      }
-
-      context.restore()
-    }
-
     const drawHazeAndVignette = () => {
       const vignette = context.createRadialGradient(
         width * 0.56,
@@ -400,7 +361,7 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
       context.fillRect(0, 0, width, height)
     }
 
-    const draw = (now) => {
+    const renderFrame = (now) => {
       const elapsed = shouldReduceMotion || isIntroActive ? 18 : (now - startedAt) / 1000
 
       context.clearRect(0, 0, width, height)
@@ -413,15 +374,34 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
 
       drawMeshLayer(foregroundPoints, 1.65)
       drawEnergyFlow(elapsed, foregroundPoints)
-      drawParticles(elapsed, foregroundPoints)
       drawHazeAndVignette()
+    }
+
+    const draw = (now) => {
+      if (!isVisible) {
+        animationFrame = window.requestAnimationFrame(draw)
+        return
+      }
+
+      if (shouldReduceMotion || isIntroActive || now - lastFrameAt >= frameInterval) {
+        lastFrameAt = now
+        renderFrame(now)
+      }
 
       if (!shouldReduceMotion && !isIntroActive) {
         animationFrame = window.requestAnimationFrame(draw)
       }
     }
 
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting
+      },
+      { threshold: 0.01 },
+    )
+
     resize()
+    observer.observe(canvas)
     window.addEventListener("resize", resize)
     animationFrame = window.requestAnimationFrame((now) => {
       startedAt = now
@@ -430,6 +410,7 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
 
     return () => {
       window.cancelAnimationFrame(animationFrame)
+      observer.disconnect()
       window.removeEventListener("resize", resize)
     }
   }, [isIntroActive, shouldReduceMotion])
