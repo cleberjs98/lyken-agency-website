@@ -74,9 +74,9 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
       const spanX = compact ? width * 1.82 : width * 1.58
       const baseY = compact ? height * 0.73 : height * 0.76
 
-      const currentA = time * (0.28 + layer * 0.03)
-      const currentB = time * (0.38 - layer * 0.03)
-      const currentC = time * 0.22
+      const currentA = time * (0.36 + layer * 0.03)
+      const currentB = time * (0.48 - layer * 0.03)
+      const currentC = time * 0.28
       const roll =
         Math.sin(u * 5.8 - time * 0.52 + layer * 0.9) * 0.72 +
         Math.sin(u * 9.4 + time * 0.22 + rowPhase * 0.25) * 0.28
@@ -84,19 +84,19 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
         Math.sin(u * 7.4 - currentB + layer * 1.2 + rowPhase * 0.44) * 0.74 +
         Math.sin(u * 13.8 + currentA + rowPhase * 0.92) * 0.34 +
         Math.sin(u * 4.2 + v * 8.8 - currentC) * 0.22
-      const twist = (twistWave + roll * 0.62) * Math.sin(v * Math.PI) * (0.44 + focal * 0.95)
+      const twist = (twistWave + roll * 0.72) * Math.sin(v * Math.PI) * (0.5 + focal * 1.08)
       const tension = clamp(Math.abs(twist) * 0.78 + focal * 0.72, 0, 1)
       const foldLine = 0.66 - u * 0.42 + Math.sin(u * 5.2 - time * 0.32) * 0.035
       const foldDistance = Math.abs(v - foldLine)
-      const fold = smoothPulse(foldDistance, 0.095) * (0.38 + focal * 0.9)
-      const twistAngle = roll * (0.76 + focal * 0.9) + fold * 0.88
+      const fold = smoothPulse(foldDistance, 0.095) * (0.43 + focal * 1)
+      const twistAngle = roll * (0.86 + focal * 1.02) + fold * 1
       const slowCurrent =
-        Math.sin(time * 0.2 + layer * 1.7 + rowPhase * 0.85) * width * 0.016 +
-        Math.sin(time * 0.13 + u * 3.4 + v * 2.8) * width * 0.012
+        Math.sin(time * 0.26 + layer * 1.7 + rowPhase * 0.85) * width * 0.017 +
+        Math.sin(time * 0.17 + u * 3.4 + v * 2.8) * width * 0.013
       const sideDrift =
-        Math.sin(u * 5.8 + v * 4.6 + time * 0.2 + layer) * width * 0.012 * depth +
-        twist * width * (compact ? 0.038 : 0.058) +
-        rowPhase * Math.sin(twistAngle) * width * (compact ? 0.026 : 0.04)
+        Math.sin(u * 5.8 + v * 4.6 + time * 0.26 + layer) * width * 0.013 * depth +
+        twist * width * (compact ? 0.046 : 0.068) +
+        rowPhase * Math.sin(twistAngle) * width * (compact ? 0.032 : 0.048)
 
       const x = originX + u * spanX + slowCurrent + sideDrift
       const diagonalLift = u * (compact ? height * 0.1 : height * 0.18)
@@ -121,8 +121,8 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
       const irregularCrest =
         Math.sin(u * 3.2 + v * 7.1 + time * 0.11) * focal * height * 0.036
       const foldShadow =
-        twist * rowPhase * height * (compact ? 0.045 : 0.068) +
-        Math.sin(twistAngle) * rowPhase * height * (compact ? 0.038 : 0.058)
+        twist * rowPhase * height * (compact ? 0.052 : 0.078) +
+        Math.sin(twistAngle) * rowPhase * height * (compact ? 0.044 : 0.066)
 
       const y =
         baseY +
@@ -406,8 +406,8 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
       context.clearRect(0, 0, width, height)
       drawBackground()
 
-      const backgroundPoints = createPoints(elapsed * 0.1 - 0.7, 1)
-      const foregroundPoints = createPoints(elapsed * 0.16, 0)
+      const backgroundPoints = createPoints(elapsed * 0.14 - 0.7, 1)
+      const foregroundPoints = createPoints(elapsed * 0.22, 0)
 
       drawMeshLayer(backgroundPoints, 0.34)
 
