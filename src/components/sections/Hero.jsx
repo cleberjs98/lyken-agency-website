@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from "framer-motion"
 import AnimatedLine from "../motion/AnimatedLine"
 import Button from "../common/Button"
 import Container from "../common/Container"
-import HeroMeshCanvas from "../motion/HeroMeshCanvas"
+import HeroVideoBackground from "../motion/HeroVideoBackground"
 import SectionLabel from "../common/SectionLabel"
 
 function Hero({ content, isIntroActive = false }) {
@@ -20,7 +20,7 @@ function Hero({ content, isIntroActive = false }) {
       className="relative isolate h-[calc(100svh-4.5rem)] min-h-[390px] max-h-[620px] overflow-hidden bg-[#061312] text-lyken-text lg:h-[calc(100svh-5rem)]"
       id="hero"
     >
-      <HeroMeshCanvas isIntroActive={isIntroActive} shouldReduceMotion={shouldReduceMotion} />
+      <HeroVideoBackground />
 
       <div
         aria-hidden="true"
