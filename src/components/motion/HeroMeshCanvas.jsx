@@ -187,17 +187,17 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
         drawCurvedPath(context, points[row])
 
         const gradient = context.createLinearGradient(width * 0.12, 0, width, 0)
-        gradient.addColorStop(0, `rgba(${gold.bronze}, ${0.012 * alphaScale})`)
-        gradient.addColorStop(0.34, `rgba(${gold.antique}, ${0.09 * alphaScale})`)
-        gradient.addColorStop(0.66, `rgba(${gold.champagne}, ${0.27 * alphaScale * rowEnergy})`)
-        gradient.addColorStop(0.86, `rgba(${gold.pale}, ${0.24 * alphaScale * rowEnergy})`)
-        gradient.addColorStop(1, `rgba(${gold.bronze}, ${0.04 * alphaScale})`)
+        gradient.addColorStop(0, `rgba(${gold.bronze}, ${0.018 * alphaScale})`)
+        gradient.addColorStop(0.34, `rgba(${gold.antique}, ${0.13 * alphaScale})`)
+        gradient.addColorStop(0.66, `rgba(${gold.champagne}, ${0.34 * alphaScale * rowEnergy})`)
+        gradient.addColorStop(0.86, `rgba(${gold.pale}, ${0.3 * alphaScale * rowEnergy})`)
+        gradient.addColorStop(1, `rgba(${gold.bronze}, ${0.06 * alphaScale})`)
         context.strokeStyle = gradient
-        context.lineWidth = 0.24 + rowEnergy * 0.14
+        context.lineWidth = 0.28 + rowEnergy * 0.16
         context.stroke()
       }
 
-      for (let column = 0; column < columns; column += width < 768 ? 4 : 4) {
+      for (let column = 0; column < columns; column += width < 768 ? 3 : 3) {
         context.beginPath()
         let hasStarted = false
 
@@ -221,9 +221,9 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
         const u = column / (columns - 1)
         const focal = smoothPulse(u - 0.78, 0.14)
         context.strokeStyle = `rgba(${focal > 0.2 ? gold.champagne : gold.antique}, ${
-          (0.032 + u * 0.078 + focal * 0.13) * alphaScale
+          (0.06 + u * 0.12 + focal * 0.18) * alphaScale
         })`
-        context.lineWidth = 0.2 + focal * 0.08
+        context.lineWidth = 0.28 + focal * 0.12
         if (hasStarted) {
           context.stroke()
         }
@@ -409,9 +409,9 @@ function HeroMeshCanvas({ isIntroActive = false, shouldReduceMotion = false }) {
       const backgroundPoints = createPoints(elapsed * 0.14 - 0.7, 1)
       const foregroundPoints = createPoints(elapsed * 0.22, 0)
 
-      drawMeshLayer(backgroundPoints, 0.34)
+      drawMeshLayer(backgroundPoints, 0.42)
 
-      drawMeshLayer(foregroundPoints, 1.42)
+      drawMeshLayer(foregroundPoints, 1.65)
       drawEnergyFlow(elapsed, foregroundPoints)
       drawParticles(elapsed, foregroundPoints)
       drawHazeAndVignette()
